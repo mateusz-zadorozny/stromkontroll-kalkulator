@@ -10,7 +10,7 @@
 
     .inp,
     input.inp {
-        width: 312px !important
+        width: 272px !important
     }
 }
 
@@ -80,13 +80,22 @@ button#stepZeroButton:hover {
 
 .inp,
 input.inp {
-    width: 341px;
+    width: 291px;
     border-radius: 3px;
     border-color: white;
     font-size: 24px;
     margin-top: -5px;
     border: 1px solid #6BC5A8;
     height: 86px;
+}
+
+input#wattHours {
+    margin-top: 24px;
+}
+
+label.inputs-sqm-kwh {
+    margin-left: 10px !important;
+    color: #17253c;
 }
 
 input::-webkit-inner-spin-button {
