@@ -16,7 +16,7 @@
  * Plugin Name:       StromKontroll kalkulator
  * Plugin URI:        https://stromkontroll.no
  * Description:       Allows you to include the simple kalkulator in your page, to calculate potential energy save.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Mateusz Zadorożny
  * Author URI:        https://mpress.cc
  * License:           GPL-2.0+
