@@ -423,9 +423,9 @@
 
 		valueSave(regionShares[currentRegion][4], houseTypeSavings[gr][4], ev, window.squareMeters, totalSave);
 
-		//document.getElementById("contact-form").style.display = "block"; //show contact form div
-
-		// BLOCK SHOW & HIDE BEFORE
+		if (document.getElementById("contact-form") != null) {
+			document.getElementById("contact-form").style.display = "block"; //show contact form div
+		}
 
 		//document.getElementById("fair-to-say").style.display = "block"; //show "fair to say" div
 		//document.getElementById("results-text").style.display = "none";

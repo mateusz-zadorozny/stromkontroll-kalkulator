@@ -14,15 +14,6 @@
     }
 }
 
-/* package on lower section */
-
-@media (max-width: 767px) {
-
-    #strompackage {
-        margin-top: 35vw;
-    }
-}
-
 /* steps on mobile */
 
 @media screen and (max-width: 992px) {
@@ -48,35 +39,12 @@
         max-width: 312px !important;
     }
 
-    button#stepZeroButton {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
 
 }
 
 /* END OF MOBILE */
 
-button#stepZeroButton {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: -10px;
-    background: #F94409;
-    border-radius: 3px;
-    padding: 16px 40px;
-    font-size: 32px;
-    line-height: 44px;
-    display: flex;
-    text-transform: uppercase;
 
-}
-
-button#stepZeroButton:hover {
-    position: relative;
-    top: 2px;
-    filter: brightness(1.4);
-}
 
 .inp,
 input.inp {
@@ -131,14 +99,6 @@ select.inp {
     min-height: 63px;
 }
 
-#calculateIt {
-    background-color: rgb(23, 37, 60);
-    color: #ffffff;
-    font-size: 32px;
-    border-radius: 3px;
-    font-weight: 700;
-}
-
 .btn-wrap {
     text-align: center;
 }
@@ -147,10 +107,6 @@ select.inp {
     color: white;
     font-weight: 700;
     margin-bottom: 8px;
-}
-
-.hide {
-    display: none;
 }
 
 #totalSaveResult {
@@ -168,11 +124,6 @@ select.inp {
     }
 }
 
-
-#contact-form,
-#fair-to-say {
-    display: none;
-}
 
 #totalSaveResultOther {
     margin-bottom: 16px;
@@ -194,30 +145,7 @@ select.inp {
     box-shadow: none !important;
 }
 
-
-
-
-.rounded,
-div#fupi_welcome_panel {
-    border-radius: 3px;
-}
-
 /* script v2 */
-
-body.page-id-554 {
-    background-color: #73F5C3 !important;
-}
-
-body.page-id-554>site-content {
-    padding: 0 !important;
-}
-
-#stepZeroButton {
-    //position:absolute;
-    //left: 0;
-    //right: 0;
-    text-align: center;
-}
 
 div.step {
     transition: visibility 0s, opacity 0.5s linear;
@@ -258,8 +186,7 @@ div.step {
     transition: opacity 0.3s ease-in;
 }
 
-.button-space a,
-#stepZero a {
+.button-space a {
     text-decoration: none;
 }
 
@@ -341,10 +268,6 @@ radio#gridCompanySelect {
 }
 
 /* RADIO INPUT */
-
-:root {
-    --currentColor: rebeccapurple;
-}
 
 input[type="radio"] {
     /* Add if not using autoprefixer */
@@ -431,7 +354,7 @@ a.last-step {
     cursor: pointer;
 }
 
-// mapa
+// styling the map
 
 #map {
     width: 100%;
