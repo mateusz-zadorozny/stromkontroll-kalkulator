@@ -259,7 +259,7 @@
 		});
 
 		$("#wattHours").on("input", function () {
-			$("#squareMeters").val($("#wattHours").val() / 122);
+			$("#squareMeters").val(Math.round($("#wattHours").val() / 122));
 		});
 
 	});
