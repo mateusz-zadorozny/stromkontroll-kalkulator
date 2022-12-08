@@ -1,0 +1,466 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+/* MOBILE */
+/* ------------------*/
+
+@media only screen and (max-width: 700px) {
+
+    .inp,
+    input.inp {
+        width: 312px !important
+    }
+}
+
+/* package on lower section */
+
+@media (max-width: 767px) {
+
+    #strompackage {
+        margin-top: 35vw;
+    }
+}
+
+/* steps on mobile */
+
+@media screen and (max-width: 992px) {
+
+    .button-continue,
+    .back-button {
+        display: flex-end;
+        margin-top: auto;
+        min-width: 140px !important;
+        font-size: 14px;
+        margin-top: 12px !important;
+        font-weight: 700;
+        letter-spacing: 0.78px;
+    }
+
+    .back-button {
+        background-color: #04AB83;
+        margin-right: auto;
+    }
+
+    .progress,
+    #monthConsumption {
+        max-width: 312px !important;
+    }
+
+    button#stepZeroButton {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+}
+
+/* END OF MOBILE */
+
+button#stepZeroButton {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -10px;
+    background: #F94409;
+    border-radius: 3px;
+    padding: 16px 40px;
+    font-size: 32px;
+    line-height: 44px;
+    display: flex;
+    text-transform: uppercase;
+
+}
+
+button#stepZeroButton:hover {
+    position: relative;
+    top: 2px;
+    filter: brightness(1.4);
+}
+
+.inp,
+input.inp {
+    width: 341px;
+    border-radius: 3px;
+    border-color: white;
+    font-size: 24px;
+    margin-top: -5px;
+    border: 1px solid #6BC5A8;
+    height: 86px;
+}
+
+input::-webkit-inner-spin-button {
+    opacity: 1;
+    height: 60px;
+}
+
+select.inp {
+
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, gray 50%),
+        linear-gradient(135deg, gray 50%, transparent 50%),
+        linear-gradient(to right, #ccc, #ccc);
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 15px) calc(1em + 2px),
+        calc(100% - 1.7em) 0.5em;
+    background-size:
+        5px 5px,
+        5px 5px,
+        1px 1.5em;
+    background-repeat: no-repeat;
+}
+
+.text-above-field {
+    min-height: 63px;
+}
+
+#calculateIt {
+    background-color: rgb(23, 37, 60);
+    color: #ffffff;
+    font-size: 32px;
+    border-radius: 3px;
+    font-weight: 700;
+}
+
+.btn-wrap {
+    text-align: center;
+}
+
+.error-notice {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.hide {
+    display: none;
+}
+
+#totalSaveResult {
+    font-size: 60px;
+    font-weight: 800;
+    color: #17253c;
+    margin-top: -16px;
+}
+
+@media only screen and (max-width: 700px) {
+
+    #totalSaveResult {
+        font-size: 42px;
+        margin-bottom: 12px;
+    }
+}
+
+
+#contact-form,
+#fair-to-say {
+    display: none;
+}
+
+#totalSaveResultOther {
+    margin-bottom: 16px;
+}
+
+#fluentform_6 button {
+    font-weight: 700;
+    font-family: Open Sans;
+    font-size: 32px;
+    padding: 12px 20px
+}
+
+#fluentform_6 input {
+    font-size: 32px !important;
+}
+
+.ff-message-success {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+
+
+
+.rounded,
+div#fupi_welcome_panel {
+    border-radius: 3px;
+}
+
+/* script v2 */
+
+body.page-id-554 {
+    background-color: #73F5C3 !important;
+}
+
+body.page-id-554>site-content {
+    padding: 0 !important;
+}
+
+#stepZeroButton {
+    //position:absolute;
+    //left: 0;
+    //right: 0;
+    text-align: center;
+}
+
+div.step {
+    transition: visibility 0s, opacity 0.5s linear;
+
+}
+
+.button-continue,
+.back-button {
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 20px;
+    margin-top: auto;
+    min-width: 157px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.78px;
+    text-transform: uppercase;
+    border-radius: 3px;
+}
+
+.button-space {
+    display: flex;
+    margin-top: 38px;
+    flex-wrap: wrap-reverse;
+}
+
+.button-continue {
+    background: #022A46;
+    color: white;
+}
+
+.button-continue:hover {
+    opacity: 0.95;
+    //background: #022A46;
+    transition: opacity 0.3s ease-in;
+}
+
+.button-space a,
+#stepZero a {
+    text-decoration: none;
+}
+
+.button-continue:after {
+    content: url(../img/next.svg);
+    position: relative;
+    top: 2px;
+    left: 8px
+}
+
+.back-button:before {
+    content: url(../img/back.png);
+    position: relative;
+    top: 2px;
+    right: 8px
+}
+
+.back-button {
+    background-color: #FFF;
+    margin-right: 26px;
+    color: #D9D9D9;
+    border: 1px solid #6BC5A8;
+
+}
+
+div.step {
+    transition: opacity 1s ease-out;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+div.active.step {
+    opacity: 1;
+    height: auto;
+    padding: 2vh;
+}
+
+p.step-description {
+    max-width: 500px;
+    font-size: 18px;
+    margin-top: 23px;
+    margin-bottom: 25px;
+}
+
+.step label {
+    font-size: 18px;
+    margin-left: 5px;
+}
+
+.step-title,
+.step-number {
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    color: #022A46;
+}
+
+p.step-description,
+#gridCompanySelect>label,
+#stepFour>label {
+    color: #022A46;
+}
+
+radio#gridCompanySelect {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.error-notice2 {
+    color: #17253c;
+    font-weight: 700;
+    margin-bottom: 8px;
+    position: absolute;
+    bottom: 190px;
+}
+
+/* RADIO INPUT */
+
+:root {
+    --currentColor: rebeccapurple;
+}
+
+input[type="radio"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+    /* For iOS < 15 to remove gradient background */
+    background-color: #fff;
+    /* Not removed via appearance */
+    margin: 0;
+}
+
+input[type="radio"] {
+    appearance: none;
+    background-color: #fff;
+    margin: 13px 5px -3px -2px;
+    font: inherit;
+    width: 1.25em;
+    height: 1.25em;
+    border: 0.1em solid #6BC5A8;
+    border-radius: 50%;
+}
+
+input[type="radio"]:checked {
+    background-color: #022A46;
+    width: 1em;
+    height: 1em;
+    margin: 13px 7px 0px 0px;
+    border: 0.15em solid #FFF;
+    outline: 0.15em solid #6BC5A8;
+}
+
+
+
+/* progress */
+
+.progress {
+    height: 42px;
+    margin-top: 25px;
+    margin-bottom: 40px;
+    max-width: 341px;
+    background-color: white;
+    border: 1px solid #6BC5A8;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    padding: 17px 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bar {
+    border-radius: 1000px;
+    background: rgba(138, 153, 168, 0.25);
+    height: 8px;
+    width: 85%;
+}
+
+.indicator {
+    background: #022A46;
+    border-radius: 1000px;
+    height: 8px;
+    width: 0%;
+}
+
+.indicator.p25 {
+    width: 25%;
+}
+
+.indicator.p50 {
+    width: 50%;
+}
+
+.indicator.p75 {
+    width: 75%;
+}
+
+#monthConsumption {
+    max-width: 333px;
+}
+
+a.last-step {
+    margin-top: 24px;
+    cursor: pointer;
+}
+
+// mapa
+
+#map {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+path.area {
+    fill: white;
+    stroke: #016FFF;
+    stroke-width: 2;
+}
+
+path.area:hover {
+    fill: #D9D9D9;
+    stroke-width: 3;
+    transition: fill 0.3s ease;
+}
+
+path.active {
+    fill: #022A46 !important;
+    stroke-width: 2;
+    stroke: white;
+    transition: fill 0.3s ease;
+}
+
+#stepFive {
+    margin-top: 40px;
+    margin-bottom: 12px;
+    padding-left: 0px;
+}
+
+/** NEW MOBILE **/
+
+@media only screen and (max-width: 700px) {
+
+    radio#gridCompanySelect {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+}
