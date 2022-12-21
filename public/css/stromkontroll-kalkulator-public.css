@@ -396,3 +396,27 @@ path.active {
         gap: 5px;
     }
 }
+
+
+
+/** Providers hiding based on region picking **/
+
+radio.NO1 div.provider.NO1 {
+    display: none;
+}
+
+radio.NO2 div.provider.NO2 {
+    display: none;
+}
+
+radio.NO3 div.provider.NO3 {
+    display: none;
+}
+
+radio.NO4 div.provider.NO4 {
+    display: none;
+}
+
+radio.NO5 div.provider.NO5 {
+    display: none;
+}

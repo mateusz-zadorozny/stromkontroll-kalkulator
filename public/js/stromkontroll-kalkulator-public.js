@@ -78,10 +78,14 @@
 
 	function showStep(step) {
 		if (step === 0) {
-			window.step0.classList.add("active");
+			if (document.getElementById("stepZero") != null) {
+				window.step0.classList.add("active");
+			}
 			window.step1.classList.remove("active");
 		} else if (step === 1) {
-			window.step0.classList.remove("active");
+			if (document.getElementById("stepZero") != null) {
+				window.step0.classList.remove("active");
+			}
 			window.step1.classList.add("active");
 			window.step2.classList.remove("active");
 			window.step5.classList.remove("active");
@@ -131,7 +135,7 @@
 		});
 	});
 
-	// step one - validate regions and get IDs from the map
+	// step one - validate regions and get IDs from the map + link with radio list
 
 	$(window).load(function () {
 
@@ -140,6 +144,7 @@
 		window.area03 = document.getElementById("NO3");
 		window.area04 = document.getElementById("NO4");
 		window.area05 = document.getElementById("NO5");
+		window.radioProvidersList = document.getElementById("gridCompanySelect");
 
 	});
 
@@ -151,6 +156,16 @@
 		window.area03.classList.remove("active");
 		window.area04.classList.remove("active");
 		window.area05.classList.remove("active");
+	}
+
+	// remove region classes before adding picked class
+
+	function resetRadioClasses() {
+		window.radioProvidersList.classList.remove("NO1");
+		window.radioProvidersList.classList.remove("NO2");
+		window.radioProvidersList.classList.remove("NO3");
+		window.radioProvidersList.classList.remove("NO4");
+		window.radioProvidersList.classList.remove("NO5");
 	}
 
 	// show picked region on the map + save the selection for calculations
@@ -202,7 +217,10 @@
 			if (typeof currentRegion === "undefined") {
 				document.getElementById("error-map").style.display = "block";
 			} else {
-				document.getElementById("error-map").style.display = "none";
+				document.getElementById("error-map").style.display = "none"; // hide error notice
+				resetRadioClasses(); // reset classes on radio element
+				window.radioProvidersList.classList.add(`NO${currentRegion + 1}`);
+				// add region picked class to radio element, to hide providers not active in picked region
 				currentStep = 2;
 				showStep(currentStep);
 			}
@@ -496,8 +514,7 @@
 				//console.log(providers);
 				providersLength = 0;
 				jQuery.each(providers, function (i, provider) {
-					//dayPrice[i] = providers[i].meta_box?.day_tariff;
-					//nightPrice[i] = providers[i].meta_box?.night_tariff;
+
 					houseTypeSavings[i] = [
 						parseInt(providers[i].meta_box?.step_reductions_app),
 						parseInt(providers[i].meta_box?.step_reductions_townhouse),
@@ -505,15 +522,21 @@
 						i,
 						providers[i].title?.rendered,
 						parseFloat(providers[i].meta_box?.day_tariff),
-						parseFloat(providers[i].meta_box?.night_tariff)
-					]; // + tariffs
+						parseFloat(providers[i].meta_box?.night_tariff),
+						providers[i].meta_box?.hidden_in_regions // add hidden regions as array
+					];
 					++providersLength;
 
-					//console.log(houseTypeSavings);
+					let hiddenClass = "";
 
-					//console.log(providers[i].id);
+					for (let x = 0; x < houseTypeSavings[i][7].length; x++) {
+						hiddenClass += houseTypeSavings[i][7][x] + " ";
+					}
+
 					$providers.append(
-						'<div><input type="radio" id=' +
+						'<div class="' +
+						hiddenClass +
+						'provider"><input type="radio" id=' +
 						i +
 						' name="gridCompanySelect" value="' +
 						i +
