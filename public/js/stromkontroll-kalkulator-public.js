@@ -36,14 +36,9 @@
 	var regionShares = []; // data of region price difference
 	var currentStep = 0; //start with zero step
 
-	// jquery wp conflict
-
-	//var $ = jQuery.noConflict();
-
 	//global vars
 
 	var houseType;
-	var houseSavings;
 	var currentGridCompany;
 	var currentRegion;
 	var evQuant;
@@ -196,6 +191,11 @@
 		}
 		console.log("Region selected: " + regionShares[currentRegion][4]);
 
+		document.getElementById("map-progress").scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+
+
+		//checkIfInView('#stepOne'); //show button below map
+
 	}
 
 	// activate regionPicker on map clicks
@@ -207,6 +207,24 @@
 
 		});
 	})
+
+	// scroll to visible progress bar function 
+
+	function checkIfInView(element) {
+
+
+
+		var offset = element.offset.top - $(window).scrollTop();
+		console.log(offset);
+
+
+		if (offset > window.innerHeight) {
+			// Not in view
+			$('html,body').animate({ scrollTop: offset }, 1000);
+			return false;
+		}
+		return true;
+	}
 
 
 

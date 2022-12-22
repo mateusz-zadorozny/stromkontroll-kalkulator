@@ -39,7 +39,7 @@
             <div class="error-notice" id="error-map">Feil: Du har ikke valgt prisområde
             </div>
             <div class="button-space"><a href="#stepForm"><button class="button-continue" id="stepOneButton">Neste</button></div></a>
-            <div class="progress">
+            <div class="progress" id="map-progress">
                 <div class="bar">
                     <div class="indicator"></div>
                 </div>
