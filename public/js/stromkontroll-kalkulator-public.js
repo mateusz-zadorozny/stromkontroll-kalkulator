@@ -215,9 +215,11 @@
 	$(function () {
 		jQuery("#stepOneButton").click(function () {
 			if (typeof currentRegion === "undefined") {
-				document.getElementById("error-map").style.display = "block";
+				//document.getElementById("error-map").style.display = "block";
+				document.getElementById("error-map").classList.add("error-visible");
 			} else {
-				document.getElementById("error-map").style.display = "none"; // hide error notice
+				document.getElementById("error-map").classList.remove("error-visible");
+				// hide error notice
 				resetRadioClasses(); // reset classes on radio element
 				window.radioProvidersList.classList.add(`NO${currentRegion + 1}`);
 				// add region picked class to radio element, to hide providers not active in picked region
@@ -235,11 +237,10 @@
 			currentGridCompany = getRadioValue("gridCompanySelect");
 
 			if (typeof currentGridCompany === "undefined") {
-				document.getElementById("error-grid").style.display = "block";
+				document.getElementById("error-grid").classList.add("error-visible");
+
 			} else {
-				document.getElementById("error-grid").style.display = "none";
-				//console.log("Picked: " + houseTypeSavings[currentGridCompany][houseType]);
-				//console.log("HouseSavings: " + houseSavings); //calculate based on house type & grid provider - table set from api values
+				document.getElementById("error-grid").classList.remove("error-visible");
 				currentStep = 3;
 				showStep(currentStep);
 			}
@@ -256,14 +257,18 @@
 		jQuery("#stepThreeButton").click(function () {
 			window.squareMeters = document.getElementById("squareMeters").value;
 			if (window.squareMeters >= 10 && window.squareMeters <= 5000) {
-				document.getElementById("error-sqm").style.display = "none";
+
+				document.getElementById("error-sqm").classList.remove("error-visible");
+
+
 				currentStep = 4;
 				showStep(currentStep);
 
 				houseType = determineHouseType(window.squareMeters);
 
 			} else {
-				document.getElementById("error-sqm").style.display = "block";
+				document.getElementById("error-sqm").classList.add("error-visible");
+
 			}
 		});
 	});
@@ -290,12 +295,13 @@
 			evQuant = getRadioValue("EVamt"); //
 
 			if (typeof evQuant === "undefined") {
-				document.getElementById("error-ev").style.display = "block";
-			} else {
-				document.getElementById("error-ev").style.display = "none";
-				//console.log("EV chargers: " + evQuant);
 
-				//        houseSavings = houseTypeSavings[currentGridCompany][houseType];
+				document.getElementById("error-ev").classList.add("error-visible");
+
+			} else {
+
+				document.getElementById("error-ev").classList.remove("error-visible");
+
 				const stepSavings = houseTypeSavings[currentGridCompany][houseType] / 2; //change from 18.11.2022
 
 				calculateSave(

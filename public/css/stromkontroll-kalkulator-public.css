@@ -57,13 +57,14 @@ input.inp {
     height: 86px;
 }
 
-input#wattHours {
+div#wattHoursSpace {
     margin-top: 24px;
 }
 
 label.inputs-sqm-kwh {
     margin-left: 10px !important;
     color: #17253c;
+    min-width: 38px;
 }
 
 input::-webkit-inner-spin-button {
@@ -101,12 +102,6 @@ select.inp {
 
 .btn-wrap {
     text-align: center;
-}
-
-.error-notice {
-    color: white;
-    font-weight: 700;
-    margin-bottom: 8px;
 }
 
 #totalSaveResult {
@@ -171,7 +166,7 @@ div.step {
 
 .button-space {
     display: flex;
-    margin-top: 38px;
+    margin-top: 12px;
     flex-wrap: wrap-reverse;
 }
 
@@ -259,12 +254,20 @@ radio#gridCompanySelect {
     gap: 5px;
 }
 
-.error-notice2 {
+.error-notice {
     color: #17253c;
     font-weight: 700;
-    margin-bottom: 8px;
-    position: absolute;
-    bottom: 190px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    opacity: 0;
+    max-height: 25px;
+}
+
+.error-visible {
+    opacity: 1 !important;
+    max-height: 200px !important;
+    transition: max-height 0.3s ease-in;
+    transition: opacity 0.3s ease-in;
 }
 
 /* RADIO INPUT */
@@ -397,7 +400,9 @@ path.active {
     }
 }
 
-
+.provider {
+    color: #022A46;
+}
 
 /** Providers hiding based on region picking **/
 
@@ -419,4 +424,14 @@ radio.NO4 div.provider.NO4 {
 
 radio.NO5 div.provider.NO5 {
     display: none;
+}
+
+
+/** Input space at sqm step 03 **/
+
+.input-space {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
 }
