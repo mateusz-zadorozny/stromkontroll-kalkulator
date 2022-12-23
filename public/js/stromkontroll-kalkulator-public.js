@@ -573,7 +573,7 @@
 				});
 
 				// add other average results
-				const annetElement = `<div><input type="radio" id="Annet" name="gridCompanySelect" value="${providersLength}"><label for="Annet">Annet</label><br></div>`;
+				const annetElement = `<div class="provider"><input type="radio" id="Annet" name="gridCompanySelect" value="${providersLength}"><label for="Annet">Annet</label><br></div>`;
 				$providers.append(annetElement);
 				var totalApp = 0;
 				var totalTH = 0;
