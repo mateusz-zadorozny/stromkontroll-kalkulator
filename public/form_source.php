@@ -36,10 +36,10 @@
                 </svg>
 
             </div>
-            <div class="error-notice2" id="error-map" style="display:none;">Feil: Du har ikke valgt prisområde
+            <div class="error-notice" id="error-map">Feil: Du har ikke valgt prisområde
             </div>
             <div class="button-space"><a href="#stepForm"><button class="button-continue" id="stepOneButton">Neste</button></div></a>
-            <div class="progress">
+            <div class="progress" id="map-progress">
                 <div class="bar">
                     <div class="indicator"></div>
                 </div>
@@ -56,7 +56,7 @@
             <radio id="gridCompanySelect">
             </radio>
 
-            <div class="error-notice2" id="error-grid" style="display:none;">Vennligst velg nettleverandør!
+            <div class="error-notice" id="error-grid">Vennligst velg nettleverandør!
             </div>
             <div class="button-space"><a href="#stepForm"><button class="back-button">Tilbake</button></a>
                 <a href="#stepForm"><button class="button-continue" id="stepTwoButton">Neste</button></a>
@@ -75,10 +75,16 @@
             <h5 class="step-title">Årlig strømforbruk</h5>
             <p class="step-description">For mest nøyaktig kalkulering skriv inn ditt årlige strømforbruk (kWh) eller bruk størrelsen på boligen din dersom du er usikker på forbruket. Vi vil da estimere forbruket ditt og beregner 122 kWh per kvadratmeter basert på gjennomsnittstall fra SSB.</p>
 
-            <input class="inp" id="squareMeters" type="number" step="1" min="20" max="500" placeholder="Kvadratmeter"><label for="squareMeters" class="inputs-sqm-kwh">m2</label>
-            <input class="inp" id="wattHours" type="number" step="10" min="1000" max="50000" placeholder="Årlig strømforbruk"><label for="wattHours" class="inputs-sqm-kwh">kWh</label>
+            <div class="input-space">
+                <input class="inp" id="squareMeters" type="number" step="1" min="20" max="500" placeholder="Kvadratmeter">
+                <label for="squareMeters" class="inputs-sqm-kwh">m2</label>
+            </div> 
+            <div class="input-space" id="wattHoursSpace">
+                <input class="inp" id="wattHours" type="number" step="10" min="2440" max="61000" placeholder="Årlig strømforbruk">
+                <label for="wattHours" class="inputs-sqm-kwh">kWh</label>
+            </div>
 
-            <div class="error-notice2" id="error-sqm" style="display:none;">Feil: Størrelsen er ikke innenfor grenseverdiene til kalkulatoren
+            <div class="error-notice" id="error-sqm">Feil: Størrelsen er ikke innenfor grenseverdiene til kalkulatoren
             </div>
 
             <div class="button-space"><a href="#stepForm"><button class="back-button">Tilbake</button></a>
@@ -106,7 +112,7 @@
             <label for="ev2">2</label><br>
             <input type="radio" id="ev3" name="EVamt" value="3">
             <label for="ev3">3</label><br>
-            <div class="error-notice2" id="error-ev" style="display:none;">Vennligst fyll inn antall elbilladere!
+            <div class="error-notice" id="error-ev">Vennligst fyll inn antall elbilladere!
             </div>
             <div class="button-space"><a href="#stepForm"><button class="back-button">Tilbake</button></a>
                 <a href="#stepForm"><button class="button-continue" id="stepFourButton">Neste</button></a>
