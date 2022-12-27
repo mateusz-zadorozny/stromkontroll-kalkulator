@@ -192,9 +192,8 @@
 		console.log("Region selected: " + regionShares[currentRegion][4]);
 
 		document.getElementById("map-progress").scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+		// scroll to visible progress bar function 
 
-
-		//checkIfInView('#stepOne'); //show button below map
 
 	}
 
@@ -207,26 +206,6 @@
 
 		});
 	})
-
-	// scroll to visible progress bar function 
-
-	function checkIfInView(element) {
-
-
-
-		var offset = element.offset.top - $(window).scrollTop();
-		console.log(offset);
-
-
-		if (offset > window.innerHeight) {
-			// Not in view
-			$('html,body').animate({ scrollTop: offset }, 1000);
-			return false;
-		}
-		return true;
-	}
-
-
 
 	// validate first step
 
@@ -245,20 +224,37 @@
 				showStep(currentStep);
 			}
 		});
-	})
+	});
+
+	// scroll after picking the provider to make sure buttons are visible
+
+	$(function () {
+
+		$('#gridCompanySelect').change(function () {
+
+			document.getElementById("providers-progress").scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+			// scroll to visible progress bar function
+
+		});
+
+	});
 
 	// validate second step
 
 	$(function () {
 
 		jQuery("#stepTwoButton").click(function () {
+
 			currentGridCompany = getRadioValue("gridCompanySelect");
 
 			if (typeof currentGridCompany === "undefined") {
+
 				document.getElementById("error-grid").classList.add("error-visible");
 
 			} else {
+
 				document.getElementById("error-grid").classList.remove("error-visible");
+
 				currentStep = 3;
 				showStep(currentStep);
 			}
@@ -485,15 +481,15 @@
 		// change the FF values
 
 		/*
-
+	
 		if (typeof document.getElementsByClassName("fluentform") != "undefined") {
-
+	
 			document.getElementsByName("userRegion")[0].value = userRegion; //names for hidden fields
 			document.getElementsByName("gp")[0].value = passGridProvider;
 			document.getElementsByName("evs")[0].value = passEVs;
 			document.getElementsByName("sqm")[0].value = passSqm;
 			document.getElementsByName("ts")[0].value = Math.round(passSaves);
-
+	
 		} */
 
 		// we will push some datalayer, push it real good
