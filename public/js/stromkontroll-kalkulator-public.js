@@ -194,7 +194,6 @@
 		document.getElementById("map-progress").scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
 		// scroll to visible progress bar function 
 
-
 	}
 
 	// activate regionPicker on map clicks
@@ -232,8 +231,13 @@
 
 		$('#gridCompanySelect').change(function () {
 
-			document.getElementById("providers-progress").scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
-			// scroll to visible progress bar function
+			if ($(window).width() < 768) {
+
+
+				document.getElementById("providers-progress").scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+				// scroll to visible progress bar function
+
+			}
 
 		});
 
