@@ -45,6 +45,60 @@
 	var providersLength; // for counting average values
 	var totalSave;
 
+	// APEX Charts
+
+	function StepDonut(heating, waterboiler, evCharger, placement) {
+
+		var options = {
+			series: [heating, waterboiler, evCharger],
+			labels: ['Heating', 'Waterboiler', 'EV Charger'],
+			fill: {
+				colors: ['#F44336', '#E91E63', '#9C27B0']
+			},
+			chart: {
+				width: 380,
+				type: 'donut',
+			},
+			dataLabels: {
+				enabled: true,
+				formatter: function (val, opts) {
+					return opts.w.globals.series[opts.seriesIndex] + " NOK"
+				},
+			},
+			responsive: [{
+				breakpoint: 480,
+				options: {
+					chart: {
+						width: 200
+					},
+					legend: {
+						show: false
+					}
+				}
+			}],
+			legend: {
+				position: 'right',
+				offsetY: 0,
+				height: 230,
+			}
+		};
+
+		var chart = new ApexCharts(document.querySelector(placement), options);
+		chart.render();
+
+
+	}
+
+	// test chart for styling
+
+	$(window).load(function () {
+
+		StepDonut(500, 313, 99, "#testChart");
+
+	});
+
+
+
 	// read from radio inputs
 
 	function getRadioValue(theRadioGroup) {
@@ -443,6 +497,10 @@
 			houseType,
 			ev); // sum of all savings with VAT (25%)
 		console.log("Total save (with VAT): " + totalSave);
+
+		// render the chart with step savings
+
+		StepDonut(heatingSavings, boilerSavings, evSavings, "#chart");
 
 		if (gr == providersLength) {
 			// other selected

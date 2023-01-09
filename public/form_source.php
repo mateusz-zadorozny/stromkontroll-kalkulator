@@ -1,3 +1,5 @@
+<div id="testChart"></div>
+
 <div id="stepForm">
 
   <div id="stepOne" class="step active">
@@ -127,6 +129,8 @@
 
 
         <div id="stepFive" class="step">
+            <div id="chart"></div>
+    
             <div id="totalSaveResult" style="display:none;">Du kan spare:
                 <br><span id="totalSaveResultNOK"></span> NOK/år
             </div>

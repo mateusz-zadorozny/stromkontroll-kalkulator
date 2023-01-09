@@ -95,7 +95,8 @@ class Stromkontroll_Kalkulator_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
+			
+    	wp_enqueue_script('apexcharts', 'https://cdn.jsdelivr.net/npm/apexcharts@latest', array(), $this->version, false);
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/stromkontroll-kalkulator-public.js', array( 'jquery' ), $this->version, false );
 
 	}
