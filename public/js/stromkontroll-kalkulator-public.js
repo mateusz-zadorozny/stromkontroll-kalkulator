@@ -127,8 +127,29 @@
 		jQuery(".last-step").click(function () {
 			currentStep = 1;
 			showStep(currentStep);
+			resultsElementsVisible(false);
 		});
 	});
+
+	// show & hide bluetop row & results row
+
+	function resultsElementsVisible(state) {
+
+		// get blue box & lower results row
+
+		const blueTop = document.getElementById("bluetop");
+		const resultsRow = document.getElementById("resultsrow");
+
+		if (state) {
+			blueTop.classList.add("active");
+			resultsRow.classList.add("active");
+			blueTop.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+		} else {
+			blueTop.classList.remove("active");
+			resultsRow.classList.remove("active");
+		}
+
+	}
 
 	// step one - validate regions and get IDs from the map + link with radio list
 
@@ -335,11 +356,14 @@
 		});
 	});
 
+	// get estimated yearl consumption based on sqm
 
 	function calculateYearlyConsupmtion(sqm) {
 
 		return sqm * 122;
 	}
+
+	// depending on the sqm set the house type
 
 	function determineHouseType(sqm) {
 
@@ -356,12 +380,16 @@
 
 	function calculateFromRegionData(region, yearlyKWh, housePicked, evs) {
 
+		// set VAT
+
+		const vat = 1.25;
+
 		// EV
 		const carChargingPerYear = 2440; //kWh
 		console.log("Car - region share %: " + regionShares[region][1]);
 
 
-		var carSave = carChargingPerYear * evs * regionShares[region][1];
+		var carSave = Math.round(vat * (carChargingPerYear * evs * regionShares[region][1]));
 
 		console.log("Car (region): " + carSave);
 
@@ -386,28 +414,63 @@
 		console.log("Heating multiplier: " + heatingSave); console.log("Yearly kWh: ", yearlyKWh); console.log("Average price reduction: ", regionShares[region][0]);
 
 
-		heatingSave = heatingSave * regionShares[region][0] * yearlyKWh * movableHeatingShare;
+		heatingSave = Math.round(vat * (heatingSave * regionShares[region][0] * yearlyKWh * movableHeatingShare));
 		console.log("Heating (region): " + heatingSave);
 
 		// Boiler
 		const boilerConsupmtionShare = 0.2;
 		const movableBoilerShare = 1;
-		var boilerSave = boilerConsupmtionShare * movableBoilerShare * regionShares[region][2] * yearlyKWh;
+		var boilerSave = Math.round(vat * (boilerConsupmtionShare * movableBoilerShare * regionShares[region][2] * yearlyKWh));
 		console.log("Boiler (region): " + boilerSave);
 
+		// return an array from region saves: car, heating, boiler
 
-
-		return carSave + heatingSave + boilerSave; // return savings based on daily prices algorythm
+		return [carSave + heatingSave + boilerSave, carSave, heatingSave, boilerSave]; // return savings based on daily prices algorythm
 	}
 
 	function calculateSave(yc, ev, hs, gr) {
+
+		let stepResults = calculateFromStepReductionData(
+			yc,
+			ev,
+			hs,
+			gr);
+
+		let regionResults = calculateFromRegionData(
+			currentRegion,
+			yc,
+			houseType,
+			ev);
+
+		console.log("Total save (with VAT): " + stepResults[0] + regionResults[0]);
+
+		showResults(stepResults, regionResults);
+
+		valueSave(
+			regionShares[currentRegion][4],
+			houseTypeSavings[gr][4],
+			ev,
+			window.squareMeters,
+			stepResults[0] + regionResults[0]); // total
+
+	}
+
+	// grid saving function
+
+	function calculateFromStepReductionData(yc, ev, hs, gr) {
+
+		// set VAT
+
+		const vat = 1.25;
+
 		/* Grid fee cost reduction, EV charging	*/
 		const carChargingPerYear = 2440;
 		const movableShareOfCharging = 0.25;
 		var evMovedToNight = carChargingPerYear * movableShareOfCharging * ev;
 		var evSavings =
-			(evMovedToNight * (houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
-			100;
+			vat * ((evMovedToNight * (houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
+				100);
+
 		console.log("EV STEP SAVE: " + evSavings);
 
 		/* Grid fee cost reduction, Water boiler */
@@ -416,8 +479,8 @@
 		var boilerMovableShare = 0.25;
 		var boilerMovedToNight = boilerShare * boilerMovableShare * yc;
 		var boilerSavings =
-			(boilerMovedToNight * (houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
-			100;
+			vat * ((boilerMovedToNight * (houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
+				100);
 
 		console.log("BOILER STEP SAVE: " + boilerSavings);
 
@@ -428,23 +491,55 @@
 		var heatingMovableShare = 0.05;
 		var heatingMovedToNight = heatingShare * heatingMovableShare * yc;
 		var heatingSavings =
-			(heatingMovedToNight *
+			vat * ((heatingMovedToNight *
 				(houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
-			100;
+				100);
 
 		console.log("HEATING STEP SAVE: " + heatingSavings);
 
+		console.log("Step reductions: ", vat * hs);
 
-		console.log("Step reductions: ", hs);
+		let totalSave = [
+			Math.round(evSavings + heatingSavings + boilerSavings + hs * vat),
+			Math.round(hs * vat),
+			Math.round(evSavings),
+			Math.round(heatingSavings),
+			Math.round(boilerSavings),
+		]
 
-		totalSave = 1.25 * (hs + evSavings + heatingSavings + boilerSavings) + calculateFromRegionData(
-			currentRegion,
-			yc,
-			houseType,
-			ev); // sum of all savings with VAT (25%)
-		console.log("Total save (with VAT): " + totalSave);
+		return totalSave
+	}
 
-		if (gr == providersLength) {
+	// show the results
+
+	function showResults(
+		gridSaves,
+		regionResults
+	) {
+		// get respective elements
+		const totalDisplay = document.getElementById("bluetop-sum");
+		const gridDisplay = document.getElementById("nett-save");
+		const carDisplay = document.getElementById("ev-save");
+		const heatingDisplay = document.getElementById("opp-save");
+		const boilerDisplay = document.getElementById("vvb-save");
+
+		let total = Math.round(gridSaves[0] + regionResults[0]);
+
+		// change the inner values
+
+		totalDisplay.innerText = total;
+		gridDisplay.innerText = gridSaves[0];
+		carDisplay.innerText = regionResults[1];
+		heatingDisplay.innerText = regionResults[2];
+		boilerDisplay.innerText = regionResults[3];
+
+		resultsElementsVisible(true);
+
+		// old code
+
+		/* 
+
+		if (currentRegion >= providersLength) {
 			// other selected
 			document.getElementById("totalSaveResult").style.display = "none"; //hide save result
 			document.getElementById("totalSaveResultOther").style.display = "block"; //show other save result
@@ -463,7 +558,8 @@
 			); //round and show save
 		}
 
-		valueSave(regionShares[currentRegion][4], houseTypeSavings[gr][4], ev, window.squareMeters, totalSave);
+		*/
+
 
 		if (document.getElementById("contact-form") != null) {
 			document.getElementById("contact-form").style.display = "block"; //show contact form div
@@ -471,6 +567,7 @@
 
 		//document.getElementById("fair-to-say").style.display = "block"; //show "fair to say" div
 		//document.getElementById("results-text").style.display = "none";
+
 	}
 
 	// pass values to fluent forms, datalayer for GTM and push custom FB event
@@ -535,7 +632,8 @@
 			dataType: "json",
 			type: "GET",
 			success: function (providers) {
-				//console.log(providers);
+				console.log("Providers VVV");
+				console.log(providers);
 				providersLength = 0;
 				jQuery.each(providers, function (i, provider) {
 
@@ -573,36 +671,60 @@
 				});
 
 				// add other average results
-				const annetElement = `<div class="provider"><input type="radio" id="Annet" name="gridCompanySelect" value="${providersLength}"><label for="Annet">Annet</label><br></div>`;
-				$providers.append(annetElement);
-				var totalApp = 0;
-				var totalTH = 0;
-				var totalHouse = 0;
-				var avDay = 0;
-				var avNight = 0;
+				const annetElementNO1 = `<div class="provider NO2 NO3 NO4 NO5"><input type="radio" id="Annet01" name="gridCompanySelect" value="${providersLength}"><label for="Annet01">Gjennomsnitt NO1</label><br></div>`;
+				const annetElementNO2 = `<div class="provider NO1 NO3 NO4 NO5"><input type="radio" id="Annet02" name="gridCompanySelect" value="${providersLength + 1}"><label for="Annet02">Gjennomsnitt NO2</label><br></div>`;
+				const annetElementNO3 = `<div class="provider NO1 NO2 NO4 NO5"><input type="radio" id="Annet03" name="gridCompanySelect" value="${providersLength + 2}"><label for="Annet03">Gjennomsnitt NO3</label><br></div>`;
+				const annetElementNO4 = `<div class="provider NO1 NO2 NO3 NO5"><input type="radio" id="Annet04" name="gridCompanySelect" value="${providersLength + 3}"><label for="Annet04">Gjennomsnitt NO4</label><br></div>`;
+				const annetElementNO5 = `<div class="provider NO1 NO2 NO3 NO4"><input type="radio" id="Annet05" name="gridCompanySelect" value="${providersLength + 4}"><label for="Annet05">Gjennomsnitt NO5</label><br></div>`;
 
-				for (let i = 0; i < providersLength; i++) {
-					totalApp += houseTypeSavings[i][0];
-					totalTH += houseTypeSavings[i][1];
-					totalHouse += houseTypeSavings[i][2];
-					avDay += houseTypeSavings[i][5];
-					avNight += houseTypeSavings[i][6];
+				$providers.append(annetElementNO1);
+				$providers.append(annetElementNO2);
+				$providers.append(annetElementNO3);
+				$providers.append(annetElementNO4);
+				$providers.append(annetElementNO5);
+
+				// run for each region separate average
+
+				for (let x = 0; x < 5; x++) {
+
+					var totalApp = 0;
+					var totalTH = 0;
+					var totalHouse = 0;
+					var avDay = 0;
+					var avNight = 0;
+					var providersInRegion = 0;
+
+					for (let i = 0; i < providersLength; i++) {
+
+						let stringHideID = `NO${x + 1}`;
+
+						if (houseTypeSavings[i][7].includes(stringHideID)) {
+							//console.log("x = ", x, "| i = ", i, " - the operator is hidden");
+						} else {
+							totalApp += houseTypeSavings[i][0];
+							totalTH += houseTypeSavings[i][1];
+							totalHouse += houseTypeSavings[i][2];
+							avDay += houseTypeSavings[i][5];
+							avNight += houseTypeSavings[i][6];
+							providersInRegion++;
+						}
+					}
+
+					houseTypeSavings[providersLength + x] = [
+						0,
+						0,
+						0,
+						providersLength + x,
+						`Annet NO${x + 1}`,
+						0,
+						0
+					];
+					houseTypeSavings[providersLength + x][0] = Math.round(totalApp / providersInRegion);
+					houseTypeSavings[providersLength + x][1] = Math.round(totalTH / providersInRegion);
+					houseTypeSavings[providersLength + x][2] = Math.round(totalHouse / providersInRegion);
+					houseTypeSavings[providersLength + x][5] = Math.round(avDay / providersInRegion);
+					houseTypeSavings[providersLength + x][6] = Math.round(avNight / providersInRegion);
 				}
-
-				houseTypeSavings[providersLength] = [
-					0,
-					0,
-					0,
-					providersLength,
-					"Annet",
-					0,
-					0
-				];
-				houseTypeSavings[providersLength][0] = totalApp / providersLength;
-				houseTypeSavings[providersLength][1] = totalTH / providersLength;
-				houseTypeSavings[providersLength][2] = totalHouse / providersLength;
-				houseTypeSavings[providersLength][5] = avDay / providersLength;
-				houseTypeSavings[providersLength][6] = avNight / providersLength;
 
 				console.log(houseTypeSavings);
 				document.getElementById("gridCompanyNumber").innerHTML = providersLength; //change displayed number with results

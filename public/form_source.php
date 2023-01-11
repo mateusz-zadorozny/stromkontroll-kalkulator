@@ -125,16 +125,10 @@
             </div>
         </div>
 
-
-        <div id="stepFive" class="step">
-            <div id="totalSaveResult" style="display:none;">Du kan spare:
-                <br><span id="totalSaveResultNOK"></span> NOK/år
-            </div>
-            <div id="totalSaveResultOther" style="font-size: 24px; display:none;">Foreløpig har vi implementert tariffer fra <span id="gridCompanyNumber">15</span> av de større nettleverandørene. Deres rekkevidde av besparelser med StrømKontroll vil være fra <span
-                    id="totalSaveResultNOKOther"></span> <b>NOK</b>. Tallene dine kan være noe annerledes, men burde ligge ganske nærme - så ikke vent og ta kontakt med oss for mer informasjon.</div>
+        <div id="stepFive" class="step">                  
             <a class="last-step">Regn ut besparelse én gang til</a><span style="margin:0px 8px;"> </span><a class="modal-trigger" href="#disclaimer-open" >Kalkulator detaljer</a>
-
-
         </div>
 
     </div>
+    
+</div>    
