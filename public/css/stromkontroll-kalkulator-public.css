@@ -218,6 +218,12 @@ div.step {
 div.active.step {
     opacity: 1;
     height: auto;
+}
+
+#stepOne.active,
+#stepTwo.active,
+#stepThree.active,
+#stepFour.active {
     padding: 2vh;
 }
 

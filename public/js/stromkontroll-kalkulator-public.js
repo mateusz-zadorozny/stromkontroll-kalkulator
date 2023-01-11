@@ -143,7 +143,9 @@
 		if (state) {
 			blueTop.classList.add("active");
 			resultsRow.classList.add("active");
-			blueTop.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+			setTimeout(function () {
+				blueTop.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+			}, 100);
 		} else {
 			blueTop.classList.remove("active");
 			resultsRow.classList.remove("active");
