@@ -115,7 +115,7 @@
             <div class="error-notice" id="error-ev">Vennligst fyll inn antall elbilladere!
             </div>
             <div class="button-space"><a href="#stepForm"><button class="back-button">Tilbake</button></a>
-                <a href="#stepForm"><button class="button-continue" id="stepFourButton">Neste</button></a>
+                <button class="button-continue" id="stepFourButton">Neste</button>
             </div>
             <div class="progress">
                 <div class="bar">
@@ -130,5 +130,5 @@
         </div>
 
     </div>
-    
+
 </div>    

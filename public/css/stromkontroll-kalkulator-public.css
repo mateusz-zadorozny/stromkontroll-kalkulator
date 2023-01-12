@@ -42,6 +42,10 @@
 
 }
 
+@media screen and (min-width: 520) {
+    display: flex;
+}
+
 /* END OF MOBILE */
 
 
@@ -367,7 +371,6 @@ a.last-step {
 
 #map {
     width: 100%;
-    display: flex;
     justify-content: center;
 }
 
