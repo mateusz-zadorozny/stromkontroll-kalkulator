@@ -80,9 +80,7 @@
 		} else if (step === 1) {
 			window.step1.classList.add("active");
 			if (document.getElementById("stepZero") != null) {
-				setTimeout(function () {
-					window.step0.classList.remove("active");
-				}, 300);
+				window.step0.classList.remove("active");
 			}
 			window.step2.classList.remove("active");
 			window.step5.classList.remove("active");
