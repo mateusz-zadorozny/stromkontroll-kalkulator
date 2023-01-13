@@ -78,10 +78,12 @@
 			}
 			window.step1.classList.remove("active");
 		} else if (step === 1) {
-			if (document.getElementById("stepZero") != null) {
-				window.step0.classList.remove("active");
-			}
 			window.step1.classList.add("active");
+			if (document.getElementById("stepZero") != null) {
+				setTimeout(function () {
+					window.step0.classList.remove("active");
+				}, 300);
+			}
 			window.step2.classList.remove("active");
 			window.step5.classList.remove("active");
 		} else if (step === 2) {
@@ -343,7 +345,7 @@
 
 				document.getElementById("error-ev").classList.remove("error-visible");
 
-				const stepSavings = houseTypeSavings[currentGridCompany][houseType] / 2; //change from 18.11.2022
+				const stepSavings = houseTypeSavings[currentGridCompany][houseType]; // dividing change from 18.11.2022 moved to step calculation part
 
 				calculateSave(
 					calculateYearlyConsupmtion(window.squareMeters), //calculate yearly consumption from sqm estimation
@@ -384,7 +386,7 @@
 
 		// set VAT
 
-		const vat = 1.25;
+		const vat = 1;
 
 		// EV
 		const carChargingPerYear = 2440; //kWh
@@ -461,9 +463,9 @@
 
 	function calculateFromStepReductionData(yc, ev, hs, gr) {
 
-		// set VAT
+		// set VAT & divide by 2 as agreed on 18.11
 
-		const vat = 1.25;
+		const vat = 1.25 / 2;
 
 		/* Grid fee cost reduction, EV charging	*/
 		const carChargingPerYear = 2440;
@@ -478,11 +480,11 @@
 		/* Grid fee cost reduction, Water boiler */
 
 		var boilerShare = 0.2;
-		var boilerMovableShare = 0.25;
+		var boilerMovableShare = 0.5;
 		var boilerMovedToNight = boilerShare * boilerMovableShare * yc;
 		var boilerSavings =
-			vat * ((boilerMovedToNight * (houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
-				100);
+			vat * ((boilerMovedToNight * ((houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
+				100));
 
 		console.log("BOILER STEP SAVE: " + boilerSavings);
 
@@ -490,14 +492,12 @@
 		/* Grid fee cost reduction, Heating */
 
 		var heatingShare = 0.55;
-		var heatingMovableShare = 0.05;
+		var heatingMovableShare = 0.1;
 		var heatingMovedToNight = heatingShare * heatingMovableShare * yc;
-		var heatingSavings =
-			vat * ((heatingMovedToNight *
-				(houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
-				100);
-
-		console.log("HEATING STEP SAVE: " + heatingSavings);
+		var heatingSavings = vat * ((heatingMovedToNight *
+			(houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
+			100);
+		console.log("Net Heating save:", heatingSavings);
 
 		console.log("Step reductions: ", vat * hs);
 
@@ -508,6 +508,9 @@
 			Math.round(heatingSavings),
 			Math.round(boilerSavings),
 		]
+
+		console.log("Step part - savings object");
+		console.log(totalSave);
 
 		return totalSave
 	}
