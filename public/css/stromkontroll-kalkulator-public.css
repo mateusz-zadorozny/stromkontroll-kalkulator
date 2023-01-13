@@ -42,6 +42,10 @@
 
 }
 
+@media screen and (min-width: 520) {
+    display: flex;
+}
+
 /* END OF MOBILE */
 
 
@@ -177,7 +181,7 @@ div.step {
 
 .button-continue:hover {
     opacity: 0.95;
-    //background: #022A46;
+    background: #02365b;
     transition: opacity 0.3s ease-in;
 }
 
@@ -218,6 +222,12 @@ div.step {
 div.active.step {
     opacity: 1;
     height: auto;
+}
+
+#stepOne.active,
+#stepTwo.active,
+#stepThree.active,
+#stepFour.active {
     padding: 2vh;
 }
 
@@ -357,11 +367,10 @@ a.last-step {
     cursor: pointer;
 }
 
-// styling the map
+/* styling the map */
 
 #map {
     width: 100%;
-    display: flex;
     justify-content: center;
 }
 
