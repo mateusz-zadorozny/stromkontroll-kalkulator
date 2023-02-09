@@ -730,7 +730,8 @@
 				}
 
 				console.log(houseTypeSavings);
-				document.getElementById("gridCompanyNumber").innerHTML = providersLength; //change displayed number with results
+				// we do not show number of all providers now
+				// document.getElementById("gridCompanyNumber").innerHTML = providersLength; //change displayed number with results
 
 			}
 		});
