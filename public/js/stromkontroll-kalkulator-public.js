@@ -344,6 +344,7 @@
 				document.getElementById("error-ev").classList.remove("error-visible");
 
 				const stepSavings = houseTypeSavings[currentGridCompany][houseType]; // dividing change from 18.11.2022 moved to step calculation part
+				console.log("stepSavings from API: " + stepSavings);
 
 				calculateSave(
 					calculateYearlyConsupmtion(window.squareMeters), //calculate yearly consumption from sqm estimation
@@ -444,7 +445,7 @@
 			houseType,
 			ev);
 
-		console.log("Total save (with VAT): " + stepResults[0] + regionResults[0]);
+		console.log("Total save: " + stepResults[0] + regionResults[0]);
 
 		showResults(stepResults, regionResults);
 
@@ -461,13 +462,13 @@
 
 	function calculateFromStepReductionData(yc, ev, hs, gr) {
 
-		// set VAT & divide by 2 as agreed on 18.11
+		// set VAT & divide by 2 as agreed on 18.11 // no division as 6.10.2023 - VAT included in price
 
-		const vat = 1.25 / 2;
+		const vat = 1;
 
 		/* Grid fee cost reduction, EV charging	*/
 		const carChargingPerYear = 2440;
-		const movableShareOfCharging = 0.25;
+		const movableShareOfCharging = 0.5;
 		var evMovedToNight = carChargingPerYear * movableShareOfCharging * ev;
 		var evSavings =
 			vat * ((evMovedToNight * (houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
@@ -495,9 +496,9 @@
 		var heatingSavings = vat * ((heatingMovedToNight *
 			(houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
 			100);
-		console.log("Net Heating save:", heatingSavings);
+		console.log("NET STEP SAVE:", heatingSavings);
 
-		console.log("Step reductions: ", vat * hs);
+		console.log("Step reductions with VAT: ", vat * hs);
 
 		let totalSave = [
 			Math.round(evSavings + heatingSavings + boilerSavings + hs * vat),
@@ -509,6 +510,8 @@
 
 		console.log("Step part - savings object");
 		console.log(totalSave);
+
+		calculateGovermentSupport(24400, 2, 0);
 
 		return totalSave
 	}
@@ -620,6 +623,22 @@
 			fbq("trackCustom", "CalculationCompleted");
 			console.log("Calculations complete");
 		} // custom Facebook event
+	}
+
+	// CALCULATE GOV SUPPORT
+
+	function calculateGovermentSupport(yearlyWatts, evChargers, regionSelected) {
+
+		let govsupportTotal;
+
+		let govHeatingSupport = yearlyWatts * 0.55 * regionShares[regionSelected][6];
+		let govBoilerSupport = yearlyWatts * 0.2 * regionShares[regionSelected][8];
+		let govEVSESupport = evChargers * 2440 * regionShares[regionSelected][10];
+
+		govsupportTotal = govHeatingSupport + govBoilerSupport + govEVSESupport;
+
+		console.warn("Gov support: ", govsupportTotal);
+
 	}
 
 	// GET THE PROVIDERS
@@ -759,7 +778,13 @@
 						parseFloat(regions[i].meta_box?.ev),
 						parseFloat(regions[i].meta_box?.boiler),
 						i,
-						regions[i].title?.rendered
+						regions[i].title?.rendered,
+						parseFloat(regions[i].meta_box?.gov_support_heating),
+						parseFloat(regions[i].meta_box?.gov_support_heating_with_FH),
+						parseFloat(regions[i].meta_box?.support_boiler),
+						parseFloat(regions[i].meta_box?.support_boiler_with_fh),
+						parseFloat(regions[i].meta_box?.support_evse),
+						parseFloat(regions[i].meta_box?.support_evse_with_fh)
 					]; // + tariffs
 
 				});

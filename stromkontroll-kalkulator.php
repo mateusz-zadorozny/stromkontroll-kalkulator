@@ -16,7 +16,7 @@
  * Plugin Name:       StromKontroll kalkulator
  * Plugin URI:        https://stromkontroll.no
  * Description:       Allows you to include the simple kalkulator in your page, to calculate potential energy save.
- * Version:           1.1.1
+ * Version:           1.2.0
  * Author:            Mateusz Zadorożny
  * Author URI:        https://mpress.cc
  * License:           GPL-2.0+
@@ -26,7 +26,7 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
+if (!defined('WPINC')) {
 	die;
 }
 
@@ -35,14 +35,15 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'STROMKONTROLL_KALKULATOR_VERSION', '1.1.1' );
+define('STROMKONTROLL_KALKULATOR_VERSION', '1.2.0');
 
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-stromkontroll-kalkulator-activator.php
  */
-function activate_stromkontroll_kalkulator() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-stromkontroll-kalkulator-activator.php';
+function activate_stromkontroll_kalkulator()
+{
+	require_once plugin_dir_path(__FILE__) . 'includes/class-stromkontroll-kalkulator-activator.php';
 	Stromkontroll_Kalkulator_Activator::activate();
 }
 
@@ -50,19 +51,20 @@ function activate_stromkontroll_kalkulator() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-stromkontroll-kalkulator-deactivator.php
  */
-function deactivate_stromkontroll_kalkulator() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-stromkontroll-kalkulator-deactivator.php';
+function deactivate_stromkontroll_kalkulator()
+{
+	require_once plugin_dir_path(__FILE__) . 'includes/class-stromkontroll-kalkulator-deactivator.php';
 	Stromkontroll_Kalkulator_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_stromkontroll_kalkulator' );
-register_deactivation_hook( __FILE__, 'deactivate_stromkontroll_kalkulator' );
+register_activation_hook(__FILE__, 'activate_stromkontroll_kalkulator');
+register_deactivation_hook(__FILE__, 'deactivate_stromkontroll_kalkulator');
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-stromkontroll-kalkulator.php';
+require plugin_dir_path(__FILE__) . 'includes/class-stromkontroll-kalkulator.php';
 
 /**
  * Begins execution of the plugin.
@@ -73,7 +75,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-stromkontroll-kalkulator.p
  *
  * @since    1.0.0
  */
-function run_stromkontroll_kalkulator() {
+function run_stromkontroll_kalkulator()
+{
 
 	$plugin = new Stromkontroll_Kalkulator();
 	$plugin->run();
@@ -81,13 +84,13 @@ function run_stromkontroll_kalkulator() {
 }
 run_stromkontroll_kalkulator();
 
-function cwpai_shortcode_function() {
+function cwpai_shortcode_function()
+{
 
 	ob_start();
-    include_once(plugin_dir_path( __FILE__ ) . 'public/form_source.php') ;
-    return ob_get_clean();
+	include_once(plugin_dir_path(__FILE__) . 'public/form_source.php');
+	return ob_get_clean();
 
 }
 
 add_shortcode('kalkulator_shortcode', 'cwpai_shortcode_function');
-
