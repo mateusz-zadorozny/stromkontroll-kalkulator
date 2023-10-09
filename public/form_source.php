@@ -2,13 +2,15 @@
 
     <div id="stepZero" class="step active">
         <h5 class="step-number">01.</h5>
-        <h5 class="step-title">House - gov support</h5>
-        <p class="step-description">House gov type.</p>
+        <h5 class="step-title">Enovatilskudd bolig</h5>
+        <p class="step-description">Vennligst spesifiser hvilken type bolig tilskuddet gjelder for å sjekke om du kan
+            motta offentlig støtte i forbindelse med din strømberegning.</p>
         <input type="radio" id="gov1" name="GovSupport" value="1">
-        <label for="gov1">First house</label><br>
+        <label for="gov1"><b>Primærbolig</b> - Jeg kvalifiseres til å motta Enova-støtte</label><br>
         <input type="radio" id="gov2" name="GovSupport" value="2">
-        <label for="gov2">Second house</label><br>
-        <div class="error-notice" id="error-gov">Alert GOV!
+        <label for="gov2"><b>Sekundærbolig</b> - Jeg er ikke kvalifisert til å møtta Enova-støtte</label><br>
+        <div class="error-notice" id="error-gov">Feil: Vi trenger denne informasjonen til beregningen av dine
+            besparelser.
         </div>
         <div class="button-space"><a href="#stepForm"><button class="button-continue" id="stepZeroButton">Neste</button>
         </div></a>

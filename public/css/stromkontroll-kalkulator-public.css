@@ -463,13 +463,6 @@ radio.NO5 div.provider.NO5 {
 
 /** Orange Button **/
 
-#stepZeroButton {
-    position: absolute;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
-
 #orange a {
     text-decoration: none;
 }
