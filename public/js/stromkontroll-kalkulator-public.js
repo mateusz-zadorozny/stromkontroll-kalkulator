@@ -1,35 +1,6 @@
 (function ($) {
 	'use strict';
 
-	/**
-	 * All of the code for your public-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
-
-
 	// api values + current step number
 
 	var houseTypeSavings = []; // table with grid provider data
@@ -38,6 +9,7 @@
 
 	//global vars
 
+	var govSupported;
 	var houseType;
 	var currentGridCompany;
 	var currentRegion;
@@ -77,6 +49,8 @@
 				window.step0.classList.add("active");
 			}
 			window.step1.classList.remove("active");
+			window.step5.classList.remove("active");
+
 		} else if (step === 1) {
 			window.step1.classList.add("active");
 			if (document.getElementById("stepZero") != null) {
@@ -111,12 +85,26 @@
 		});
 	});
 
-	// step 0 - just continue with form filling
+	// step 0 - gov question step
 
 	$(function () {
 		jQuery("#stepZeroButton").click(function () {
-			currentStep = 1;
-			showStep(currentStep);
+
+			govSupported = getRadioValue("GovSupport");
+			console.warn("Goverment support: ", govSupported);
+
+			if (typeof govSupported === "undefined") {
+
+				document.getElementById("error-gov").classList.add("error-visible");
+
+			} else {
+
+				document.getElementById("error-gov").classList.remove("error-visible");
+
+				currentStep = 1;
+				showStep(currentStep);
+			}
+
 		});
 	});
 
@@ -125,7 +113,7 @@
 
 	$(function () {
 		jQuery(".last-step").click(function () {
-			currentStep = 1;
+			currentStep = 0;
 			showStep(currentStep);
 			resultsElementsVisible(false);
 		});
@@ -344,7 +332,7 @@
 				document.getElementById("error-ev").classList.remove("error-visible");
 
 				const stepSavings = houseTypeSavings[currentGridCompany][houseType]; // dividing change from 18.11.2022 moved to step calculation part
-				console.log("stepSavings from API: " + stepSavings);
+				console.log("%cStep savings from lower step tariffs: " + stepSavings, "background-color: lightgreen;");
 
 				calculateSave(
 					calculateYearlyConsupmtion(window.squareMeters), //calculate yearly consumption from sqm estimation
@@ -447,7 +435,7 @@
 
 		console.log("Total save: " + stepResults[0] + regionResults[0]);
 
-		showResults(stepResults, regionResults);
+		showResults(stepResults, regionResults, yc, ev, currentRegion);
 
 		valueSave(
 			regionShares[currentRegion][4],
@@ -474,7 +462,7 @@
 			vat * ((evMovedToNight * (houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
 				100);
 
-		console.log("EV STEP SAVE: " + evSavings);
+		console.log("%cEVSE step saves: " + evSavings, "background-color: lightgreen;");
 
 		/* Grid fee cost reduction, Water boiler */
 
@@ -485,7 +473,7 @@
 			vat * ((boilerMovedToNight * ((houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
 				100));
 
-		console.log("BOILER STEP SAVE: " + boilerSavings);
+		console.log("%cBoiler step saves: " + boilerSavings, "background-color: lightgreen;");
 
 
 		/* Grid fee cost reduction, Heating */
@@ -496,9 +484,9 @@
 		var heatingSavings = vat * ((heatingMovedToNight *
 			(houseTypeSavings[gr][5] - houseTypeSavings[gr][6])) /
 			100);
-		console.log("NET STEP SAVE:", heatingSavings);
+		console.log("%cHeating step saves: " + heatingSavings, "background-color: lightgreen;");
 
-		console.log("Step reductions with VAT: ", vat * hs);
+		console.log("%cStep reductions with VAT: " + vat * hs, "background-color: lightgreen;");
 
 		let totalSave = [
 			Math.round(evSavings + heatingSavings + boilerSavings + hs * vat),
@@ -507,11 +495,7 @@
 			Math.round(heatingSavings),
 			Math.round(boilerSavings),
 		]
-
-		console.log("Step part - savings object");
 		console.log(totalSave);
-
-		calculateGovermentSupport(24400, 2, 0);
 
 		return totalSave
 	}
@@ -520,16 +504,31 @@
 
 	function showResults(
 		gridSaves,
-		regionResults
+		regionResults,
+		yearlyConsumption,
+		evse,
+		regionSelected
 	) {
 		// get respective elements
 		const totalDisplay = document.getElementById("bluetop-sum");
+		//const supportText = document.getElementById("support-text");
 		const gridDisplay = document.getElementById("nett-save");
 		const carDisplay = document.getElementById("ev-save");
 		const heatingDisplay = document.getElementById("opp-save");
 		const boilerDisplay = document.getElementById("vvb-save");
 
-		let total = Math.round(gridSaves[0] + regionResults[0]);
+		let total;
+		let supportAmmount;
+
+		if (govSupported == 1) { // we adjust calculations to gov support and show custom text
+			supportAmmount = calculateGovermentSupport(yearlyConsumption, evse, regionSelected);
+			//supportText.innerText = 'Includes adjusted GOV support difference of ' + Math.round(supportAmmount[0] - supportAmmount[1]) + 'NOK';
+			total = Math.round(gridSaves[0] + regionResults[0] - supportAmmount[0] + supportAmmount[1]);
+		} else { // if 2 then we ignore all gov support
+			total = Math.round(gridSaves[0] + regionResults[0]);
+			//supportText.innerText = '';
+		}
+
 
 		// change the inner values
 
@@ -541,38 +540,9 @@
 
 		resultsElementsVisible(true);
 
-		// old code
-
-		/* 
-
-		if (currentRegion >= providersLength) {
-			// other selected
-			document.getElementById("totalSaveResult").style.display = "none"; //hide save result
-			document.getElementById("totalSaveResultOther").style.display = "block"; //show other save result
-			document.getElementById("totalSaveResultNOKOther").innerHTML =
-				"<b>" +
-				Math.round(totalSave * 0.5) +
-				" NOK </b>to <b>" +
-				Math.round(totalSave * 1.5); //round and show save range
-		} else {
-			// normal grid
-
-			document.getElementById("totalSaveResult").style.display = "block"; //show save result
-			document.getElementById("totalSaveResultOther").style.display = "none"; //hide other save result
-			document.getElementById("totalSaveResultNOK").textContent = Math.round(
-				totalSave
-			); //round and show save
-		}
-
-		*/
-
-
 		if (document.getElementById("contact-form") != null) {
 			document.getElementById("contact-form").style.display = "block"; //show contact form div
 		}
-
-		//document.getElementById("fair-to-say").style.display = "block"; //show "fair to say" div
-		//document.getElementById("results-text").style.display = "none";
 
 	}
 
@@ -629,15 +599,25 @@
 
 	function calculateGovermentSupport(yearlyWatts, evChargers, regionSelected) {
 
-		let govsupportTotal;
+		let fullGovSupport;
+		let fhSupportTotal;
 
-		let govHeatingSupport = yearlyWatts * 0.55 * regionShares[regionSelected][6];
-		let govBoilerSupport = yearlyWatts * 0.2 * regionShares[regionSelected][8];
-		let govEVSESupport = evChargers * 2440 * regionShares[regionSelected][10];
+		// calculate gov support without Futurehome (bigger)
+		let fullGovHeatingSupport = yearlyWatts * 0.55 * regionShares[regionSelected][5];
+		let fullGovBoilerSupport = yearlyWatts * 0.2 * regionShares[regionSelected][7];
+		let fullGovEVSESupport = evChargers * 2440 * regionShares[regionSelected][9];
+		// calculate adjusted gov support with Futurome (smaller due to lower energy consupmtion)
+		let fhHeatingSupport = yearlyWatts * 0.55 * regionShares[regionSelected][6];
+		let fhBoilerSupport = yearlyWatts * 0.2 * regionShares[regionSelected][8];
+		let fhEVSESupport = evChargers * 2440 * regionShares[regionSelected][10];
 
-		govsupportTotal = govHeatingSupport + govBoilerSupport + govEVSESupport;
+		fullGovSupport = fullGovHeatingSupport + fullGovBoilerSupport + fullGovEVSESupport;
+		fhSupportTotal = fhHeatingSupport + fhBoilerSupport + fhEVSESupport;
+		console.warn("Full support: ", fullGovSupport);
+		console.warn("Adjusted support: ", fhSupportTotal);
 
-		console.warn("Gov support: ", govsupportTotal);
+
+		return [fullGovSupport, fhSupportTotal];
 
 	}
 
@@ -749,7 +729,7 @@
 				}
 
 				console.log(houseTypeSavings);
-				document.getElementById("gridCompanyNumber").innerHTML = providersLength; //change displayed number with results
+				//document.getElementById("gridCompanyNumber").innerHTML = providersLength; //change displayed number with results
 
 			}
 		});

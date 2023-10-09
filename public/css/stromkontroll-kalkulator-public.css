@@ -346,16 +346,32 @@ input[type="radio"]:checked {
     width: 0%;
 }
 
+.indicator.p20 {
+    width: 20%;
+}
+
 .indicator.p25 {
     width: 25%;
+}
+
+.indicator.p40 {
+    width: 40%;
 }
 
 .indicator.p50 {
     width: 50%;
 }
 
+.indicator.p60 {
+    width: 60%;
+}
+
 .indicator.p75 {
     width: 75%;
+}
+
+.indicator.p80 {
+    width: 80%;
 }
 
 #monthConsumption {
