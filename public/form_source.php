@@ -2,19 +2,20 @@
 
     <div id="stepZero" class="step active">
         <h5 class="step-number">01.</h5>
-        <h5 class="step-title">Enovatilskudd bolig</h5>
-        <p class="step-description">Vennligst spesifiser hvilken type bolig tilskuddet gjelder for å sjekke om du kan
-            motta offentlig støtte i forbindelse med din strømberegning.</p>
+        <h5 class="step-title">Strømstøtte (kompensasjonsordningen)</h5>
+        <p class="step-description">Vennligst spesifiser om du ønsker å se beregning inklusiv statlig strømstøtte eller
+            ikke. Dette vil for eksempel være forskjell mellom primærbolig (mottar støtte) og fritidsbolig (mottar ikke
+            støtte).</p>
         <input type="radio" id="gov1" name="GovSupport" value="1">
-        <label for="gov1"><b>Primærbolig</b> - Jeg kvalifiseres til å motta Enova-støtte</label><br>
+        <label for="gov1"><b>Primærbolig</b> - inklusiv strømstøtte</label><br>
         <input type="radio" id="gov2" name="GovSupport" value="2">
-        <label for="gov2"><b>Sekundærbolig</b> - Jeg er ikke kvalifisert til å møtta Enova-støtte</label><br>
+        <label for="gov2"><b>Sekundærbolig</b> - eksklusiv strømstøtte</label><br>
         <div class="error-notice" id="error-gov">Feil: Vi trenger denne informasjonen til beregningen av dine
             besparelser.
         </div>
         <div class="button-space"><a href="#stepForm"><button class="button-continue" id="stepZeroButton">Neste</button>
         </div></a>
-        <div class="progress" id="map-progress">
+        <div class="progress">
             <div class="bar">
                 <div class="indicator"></div>
             </div>
@@ -65,7 +66,7 @@
             <a href="#stepForm"><button class="back-button">Tilbake</button></a>
             <a href="#stepForm"><button class="button-continue" id="stepOneButton">Neste</button></a>
         </div>
-        <div class="progress" id="providers-progress">
+        <div class="progress" id="map-progress">
             <div class="bar">
                 <div class="indicator p20"></div>
             </div>

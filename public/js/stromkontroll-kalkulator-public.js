@@ -518,12 +518,18 @@
 		const boilerDisplay = document.getElementById("vvb-save");
 
 		let total;
+		let regionHeating = regionResults[2];
+		let regionBoiler = regionResults[3];
+		let regionCar = regionResults[1];
 		let supportAmmount;
 
 		if (govSupported == 1) { // we adjust calculations to gov support and show custom text
 			supportAmmount = calculateGovermentSupport(yearlyConsumption, evse, regionSelected);
 			//supportText.innerText = 'Includes adjusted GOV support difference of ' + Math.round(supportAmmount[0] - supportAmmount[1]) + 'NOK';
-			total = Math.round(gridSaves[0] + regionResults[0] - supportAmmount[0] + supportAmmount[1]);
+			total = Math.round(gridSaves[0] + regionResults[0] - supportAmmount[0]);
+			regionHeating = Math.round(regionHeating - supportAmmount[1]);
+			regionBoiler = Math.round(regionBoiler - supportAmmount[2]);
+			regionCar = Math.round(regionCar - supportAmmount[3]);
 		} else { // if 2 then we ignore all gov support
 			total = Math.round(gridSaves[0] + regionResults[0]);
 			//supportText.innerText = '';
@@ -534,9 +540,9 @@
 
 		totalDisplay.innerText = total;
 		gridDisplay.innerText = gridSaves[0];
-		carDisplay.innerText = regionResults[1];
-		heatingDisplay.innerText = regionResults[2];
-		boilerDisplay.innerText = regionResults[3];
+		carDisplay.innerText = regionCar;
+		heatingDisplay.innerText = regionHeating;
+		boilerDisplay.innerText = regionBoiler;
 
 		resultsElementsVisible(true);
 
@@ -599,9 +605,6 @@
 
 	function calculateGovermentSupport(yearlyWatts, evChargers, regionSelected) {
 
-		let fullGovSupport;
-		let fhSupportTotal;
-
 		// calculate gov support without Futurehome (bigger)
 		let fullGovHeatingSupport = yearlyWatts * 0.55 * regionShares[regionSelected][5];
 		let fullGovBoilerSupport = yearlyWatts * 0.2 * regionShares[regionSelected][7];
@@ -611,13 +614,16 @@
 		let fhBoilerSupport = yearlyWatts * 0.2 * regionShares[regionSelected][8];
 		let fhEVSESupport = evChargers * 2440 * regionShares[regionSelected][10];
 
-		fullGovSupport = fullGovHeatingSupport + fullGovBoilerSupport + fullGovEVSESupport;
-		fhSupportTotal = fhHeatingSupport + fhBoilerSupport + fhEVSESupport;
+		let fullGovSupport = fullGovHeatingSupport + fullGovBoilerSupport + fullGovEVSESupport;
+		let fhSupportTotal = fhHeatingSupport + fhBoilerSupport + fhEVSESupport;
+		let fullDifference = fullGovSupport - fhSupportTotal;
+		let heatingDifference = fullGovHeatingSupport - fhHeatingSupport;
+		let boilerDifference = fullGovBoilerSupport - fhBoilerSupport;
+		let evseDifference = fullGovEVSESupport - fhEVSESupport;
 		console.warn("Full support: ", fullGovSupport);
 		console.warn("Adjusted support: ", fhSupportTotal);
 
-
-		return [fullGovSupport, fhSupportTotal];
+		return [fullDifference, heatingDifference, boilerDifference, evseDifference];
 
 	}
 
