@@ -433,7 +433,7 @@
 			houseType,
 			ev);
 
-		console.log("Total save: " + stepResults[0] + regionResults[0]);
+		console.log("Total save: " + Math.round(stepResults[0] + regionResults[0]));
 
 		showResults(stepResults, regionResults, yc, ev, currentRegion);
 
@@ -511,7 +511,6 @@
 	) {
 		// get respective elements
 		const totalDisplay = document.getElementById("bluetop-sum");
-		//const supportText = document.getElementById("support-text");
 		const gridDisplay = document.getElementById("nett-save");
 		const carDisplay = document.getElementById("ev-save");
 		const heatingDisplay = document.getElementById("opp-save");
@@ -525,14 +524,12 @@
 
 		if (govSupported == 1) { // we adjust calculations to gov support and show custom text
 			supportAmmount = calculateGovermentSupport(yearlyConsumption, evse, regionSelected);
-			//supportText.innerText = 'Includes adjusted GOV support difference of ' + Math.round(supportAmmount[0] - supportAmmount[1]) + 'NOK';
 			total = Math.round(gridSaves[0] + regionResults[0] - supportAmmount[0]);
 			regionHeating = Math.round(regionHeating - supportAmmount[1]);
 			regionBoiler = Math.round(regionBoiler - supportAmmount[2]);
 			regionCar = Math.round(regionCar - supportAmmount[3]);
 		} else { // if 2 then we ignore all gov support
 			total = Math.round(gridSaves[0] + regionResults[0]);
-			//supportText.innerText = '';
 		}
 
 
