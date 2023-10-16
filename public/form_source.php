@@ -9,7 +9,7 @@
         <input type="radio" id="gov1" name="GovSupport" value="1">
         <label for="gov1"><b>Primærbolig</b> - inklusiv strømstøtte</label><br>
         <input type="radio" id="gov2" name="GovSupport" value="2">
-        <label for="gov2"><b>Sekundærbolig</b> - eksklusiv strømstøtte</label><br>
+        <label for="gov2"><b>Fritidsbolig</b> - eksklusiv strømstøtte</label><br>
         <div class="error-notice" id="error-gov">Feil: Vi trenger denne informasjonen til beregningen av dine
             besparelser.
         </div>

@@ -679,11 +679,11 @@
 				});
 
 				// add other average results
-				const annetElementNO1 = `<div class="provider NO2 NO3 NO4 NO5"><input type="radio" id="Annet01" name="gridCompanySelect" value="${providersLength}"><label for="Annet01">Gjennomsnitt NO1</label><br></div>`;
-				const annetElementNO2 = `<div class="provider NO1 NO3 NO4 NO5"><input type="radio" id="Annet02" name="gridCompanySelect" value="${providersLength + 1}"><label for="Annet02">Gjennomsnitt NO2</label><br></div>`;
-				const annetElementNO3 = `<div class="provider NO1 NO2 NO4 NO5"><input type="radio" id="Annet03" name="gridCompanySelect" value="${providersLength + 2}"><label for="Annet03">Gjennomsnitt NO3</label><br></div>`;
-				const annetElementNO4 = `<div class="provider NO1 NO2 NO3 NO5"><input type="radio" id="Annet04" name="gridCompanySelect" value="${providersLength + 3}"><label for="Annet04">Gjennomsnitt NO4</label><br></div>`;
-				const annetElementNO5 = `<div class="provider NO1 NO2 NO3 NO4"><input type="radio" id="Annet05" name="gridCompanySelect" value="${providersLength + 4}"><label for="Annet05">Gjennomsnitt NO5</label><br></div>`;
+				const annetElementNO1 = `<div class="provider NO2 NO3 NO4 NO5"><input type="radio" id="Annet01" name="gridCompanySelect" value="${providersLength}"><label for="Annet01">Gjennomsnitt nettselskap Østlandet</label><br></div>`;
+				const annetElementNO2 = `<div class="provider NO1 NO3 NO4 NO5"><input type="radio" id="Annet02" name="gridCompanySelect" value="${providersLength + 1}"><label for="Annet02">Gjennomsnitt nettselskap Sørlandet</label><br></div>`;
+				const annetElementNO3 = `<div class="provider NO1 NO2 NO4 NO5"><input type="radio" id="Annet03" name="gridCompanySelect" value="${providersLength + 2}"><label for="Annet03">Gjennomsnitt nettselskap Midt-Norge</label><br></div>`;
+				const annetElementNO4 = `<div class="provider NO1 NO2 NO3 NO5"><input type="radio" id="Annet04" name="gridCompanySelect" value="${providersLength + 3}"><label for="Annet04">Gjennomsnitt nettselskap Nord-Norge</label><br></div>`;
+				const annetElementNO5 = `<div class="provider NO1 NO2 NO3 NO4"><input type="radio" id="Annet05" name="gridCompanySelect" value="${providersLength + 4}"><label for="Annet05">Gjennomsnitt nettselskap Vestlandet</label><br></div>`;
 
 				$providers.append(annetElementNO1);
 				$providers.append(annetElementNO2);
