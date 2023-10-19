@@ -103,6 +103,9 @@
 
 				currentStep = 1;
 				showStep(currentStep);
+				// send calculationsStart to FigPii
+				window._fpEvent = window._fpEvent || [];
+				window._fpEvent.push(["eventConversion", { value: "calculationsStart" }]);
 			}
 
 		});
@@ -343,6 +346,8 @@
 
 				currentStep = 5;
 				showStep(currentStep);
+				window._fpEvent = window._fpEvent || [];
+				window._fpEvent.push(["eventConversion", { value: "calculateSave" }]);
 			}
 		});
 	});
