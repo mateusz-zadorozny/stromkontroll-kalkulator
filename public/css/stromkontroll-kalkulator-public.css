@@ -288,14 +288,12 @@ input[type="radio"] {
     appearance: none;
     /* For iOS < 15 to remove gradient background */
     background-color: #fff;
-    /* Not removed via appearance */
-    margin: 0;
 }
 
 input[type="radio"] {
     appearance: none;
     background-color: #fff;
-    margin: 13px 5px 0px -2px;
+    margin: 13px 5px -3px 0px;
     font: inherit;
     width: 1.25em;
     height: 1.25em;
@@ -307,12 +305,10 @@ input[type="radio"]:checked {
     background-color: #022A46;
     width: 1em;
     height: 1em;
-    margin: 13px 7px 0px 0px;
+    margin: 12px 7px -2px 2px;
     border: 0.15em solid #FFF;
     outline: 0.15em solid #6BC5A8;
 }
-
-
 
 /* progress */
 
