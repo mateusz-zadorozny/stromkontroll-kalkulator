@@ -87,46 +87,69 @@
 	// Global fields verification
 	// selection of GovSupport
 	function checkGovSupport() {
-
+		console.log("Checking Goverment Support selection ...");
 		govSupported = getRadioValue("GovSupport");
-		console.log("Goverment support: ", govSupported);
-
 		if (typeof govSupported === "undefined") {
-
 			document.getElementById("error-gov").classList.add("error-visible");
+			console.warn("No goverment support picked! ", govSupported);
 			return (false);
 		} else {
-
 			document.getElementById("error-gov").classList.remove("error-visible");
+			console.log("Goverment support:", govSupported, "(1 - with support, 2 - without support)");
 			return (true);
 		}
-
 	}
 	// selection of Region
 	function checkRegionSelection() {
-
+		console.log("Checking region selection ...");
 		if (document.getElementById("newZeroButton") !== null) {
-			console.error("New form!");
+			console.log("New form is active - #newZeroButton is present");
 			currentRegion = parseInt(getRadioValue("RegionRadio"), 10);
 		}
 
-		if (typeof currentRegion === "undefined") {
-			//document.getElementById("error-map").style.display = "block";
-			document.getElementById("error-map").classList.add("error-visible");
-			return false;
-		} else {
+		if (!isNaN(currentRegion) && currentRegion < 5) {
+			console.log("Currently selected region ID:", currentRegion);
 			document.getElementById("error-map").classList.remove("error-visible");
 			// hide error notice
 			resetRadioClasses(); // reset classes on radio element
 			window.radioProvidersList.classList.add(`NO${currentRegion + 1}`);
 			// add region picked class to radio element, to hide providers not active in picked region
 			return true;
+		} else {
+			console.warn("No region selected.")
+			document.getElementById("error-map").classList.add("error-visible");
+			return false;
 		}
-
 	}
 	// selection of Provider
 	function checkProviderSelection() {
+		console.log("Checking provider selection ...");
+		currentGridCompany = getRadioValue("gridCompanySelect");
 
+		if (typeof currentGridCompany === "undefined") {
+			document.getElementById("error-grid").classList.add("error-visible");
+			return false;
+		}
+
+		if (typeof currentGridCompany === "string") {
+			document.getElementById("error-grid").classList.remove("error-visible");
+			return true;
+		}
+	}
+	// input of SQM
+	function checkHouseSQM() {
+		console.log("Checking SQM value ...");
+		window.squareMeters = document.getElementById("squareMeters").value;
+		if (window.squareMeters >= 10 && window.squareMeters <= 5000) {
+			document.getElementById("error-sqm").classList.remove("error-visible");
+			houseType = determineHouseType(window.squareMeters);
+			console.log("House SQM value:", window.squareMeters, ", House type:", houseType);
+			return true;
+		} else {
+			document.getElementById("error-sqm").classList.add("error-visible");
+			console.warn("Wrong SQM value or none.");
+			return false;
+		}
 	}
 
 	// NEWFORM: Step 0: GOV+REGION
@@ -142,7 +165,7 @@
 				window._fpEvent = window._fpEvent || [];
 				window._fpEvent.push(["eventConversion", { value: "calculationsStart" }]);
 			} else {
-				console.warn("No choice on Goverment support or Region selection.");
+				console.warn("Can't proceed to next step.");
 			}
 
 		});
@@ -150,7 +173,29 @@
 	// NEWFORM: Step 1: PROVIDER
 	$(function () {
 		jQuery("#newOneButton").click(function () {
-			console.log("Confirming Step 1");
+			console.log("Going to next step ...");
+			if (checkProviderSelection()) {
+				console.log("Data picked. Showing next step.");
+				currentStep = 2;
+				showStep(currentStep);
+				// provider was selected
+			} else {
+				console.warn("Can't proceed to next step.");
+			}
+		});
+	});
+	// NEWFORM: Step 2: HOUSE SQM + EVSE
+	$(function () {
+		jQuery("#newTwoButton").click(function () {
+			console.log("Going to next step ...");
+			if (checkHouseSQM() && checkEVSE()) {
+				console.log("Data picked. Showing next step.");
+				currentStep = 3;
+				showStep(currentStep);
+				// provider was selected
+			} else {
+				console.warn("Can't proceed to next step.");
+			}
 		});
 	});
 
@@ -286,7 +331,7 @@
 
 	$(function () {
 		jQuery("#stepOneButton").click(function () {
-
+			console.log("Going to next step ...");
 			if (checkRegionSelection()) {
 				// was selected
 				currentStep = 2;
@@ -305,7 +350,6 @@
 
 			if ($(window).width() < 768) {
 
-
 				document.getElementById("providers-progress").scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
 				// scroll to visible progress bar function
 
@@ -318,21 +362,17 @@
 	// validate second step
 
 	$(function () {
-
 		jQuery("#stepTwoButton").click(function () {
-
+			console.log("Going to next step ...");
 			currentGridCompany = getRadioValue("gridCompanySelect");
 
-			if (typeof currentGridCompany === "undefined") {
-
-				document.getElementById("error-grid").classList.add("error-visible");
-
-			} else {
-
-				document.getElementById("error-grid").classList.remove("error-visible");
+			if (checkProviderSelection()) {
+				console.log("Showing next step ...");
 
 				currentStep = 3;
 				showStep(currentStep);
+			} else {
+				console.warn("Can't proceed to next step.")
 			}
 		});
 
@@ -346,19 +386,13 @@
 
 		jQuery("#stepThreeButton").click(function () {
 			window.squareMeters = document.getElementById("squareMeters").value;
-			if (window.squareMeters >= 10 && window.squareMeters <= 5000) {
-
-				document.getElementById("error-sqm").classList.remove("error-visible");
-
-
+			if (checkHouseSQM()) {
+				console.log("Showing next step...")
 				currentStep = 4;
 				showStep(currentStep);
 
-				houseType = determineHouseType(window.squareMeters);
-
 			} else {
-				document.getElementById("error-sqm").classList.add("error-visible");
-
+				console.warn("Error validating step 3.")
 			}
 		});
 	});

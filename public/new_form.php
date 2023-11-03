@@ -72,7 +72,7 @@
         <div class="error-notice" id="error-grid">Vennligst velg nettleverandør!
         </div>
         <div class="button-space"><a href="#stepForm"><button class="back-button">Tilbake</button></a>
-            <a href="#stepForm"><button class="button-continue" id="stepTwoButton">Neste</button></a>
+            <a href="#stepForm"><button class="button-continue" id="newTwoButton">Neste</button></a>
         </div>
         <div class="progress" id="providers-progress">
             <div class="bar">
