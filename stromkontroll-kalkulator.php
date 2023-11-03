@@ -94,3 +94,14 @@ function cwpai_shortcode_function()
 }
 
 add_shortcode('kalkulator_shortcode', 'cwpai_shortcode_function');
+
+function new_shortcode_function()
+{
+
+	ob_start();
+	include_once(plugin_dir_path(__FILE__) . 'public/new_form.php');
+	return ob_get_clean();
+
+}
+
+add_shortcode('new_kalkulator_shortcode', 'new_shortcode_function');

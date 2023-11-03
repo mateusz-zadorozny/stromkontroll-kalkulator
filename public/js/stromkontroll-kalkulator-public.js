@@ -15,7 +15,6 @@
 	var currentRegion;
 	var evQuant;
 	var providersLength; // for counting average values
-	var totalSave;
 
 	// read from radio inputs
 
@@ -85,27 +84,90 @@
 		});
 	});
 
-	// step 0 - gov question step
+	// Global fields verification
+	// selection of GovSupport
+	function checkGovSupport() {
 
+		govSupported = getRadioValue("GovSupport");
+		console.log("Goverment support: ", govSupported);
+
+		if (typeof govSupported === "undefined") {
+
+			document.getElementById("error-gov").classList.add("error-visible");
+			return (false);
+		} else {
+
+			document.getElementById("error-gov").classList.remove("error-visible");
+			return (true);
+		}
+
+	}
+	// selection of Region
+	function checkRegionSelection() {
+
+		if (document.getElementById("newZeroButton") !== null) {
+			console.error("New form!");
+			currentRegion = parseInt(getRadioValue("RegionRadio"), 10);
+		}
+
+		if (typeof currentRegion === "undefined") {
+			//document.getElementById("error-map").style.display = "block";
+			document.getElementById("error-map").classList.add("error-visible");
+			return false;
+		} else {
+			document.getElementById("error-map").classList.remove("error-visible");
+			// hide error notice
+			resetRadioClasses(); // reset classes on radio element
+			window.radioProvidersList.classList.add(`NO${currentRegion + 1}`);
+			// add region picked class to radio element, to hide providers not active in picked region
+			return true;
+		}
+
+	}
+	// selection of Provider
+	function checkProviderSelection() {
+
+	}
+
+	// NEWFORM: Step 0: GOV+REGION
 	$(function () {
-		jQuery("#stepZeroButton").click(function () {
-
-			govSupported = getRadioValue("GovSupport");
-			console.warn("Goverment support: ", govSupported);
-
-			if (typeof govSupported === "undefined") {
-
-				document.getElementById("error-gov").classList.add("error-visible");
-
-			} else {
-
-				document.getElementById("error-gov").classList.remove("error-visible");
-
+		jQuery("#newZeroButton").click(function () {
+			console.log("Going to next step ...");
+			if (checkGovSupport() && checkRegionSelection()) {
+				// was true
+				console.log("Data picked. Showing next step.");
 				currentStep = 1;
 				showStep(currentStep);
 				// send calculationsStart to FigPii
 				window._fpEvent = window._fpEvent || [];
 				window._fpEvent.push(["eventConversion", { value: "calculationsStart" }]);
+			} else {
+				console.warn("No choice on Goverment support or Region selection.");
+			}
+
+		});
+	});
+	// NEWFORM: Step 1: PROVIDER
+	$(function () {
+		jQuery("#newOneButton").click(function () {
+			console.log("Confirming Step 1");
+		});
+	});
+
+	// step 0 - gov question step for old form
+
+	$(function () {
+		jQuery("#stepZeroButton").click(function () {
+
+			if (checkGovSupport()) {
+				// was true
+				currentStep = 1;
+				showStep(currentStep);
+				// send calculationsStart to FigPii
+				window._fpEvent = window._fpEvent || [];
+				window._fpEvent.push(["eventConversion", { value: "calculationsStart" }]);
+			} else {
+				console.warn("No choice on Goverment support");
 			}
 
 		});
@@ -224,17 +286,13 @@
 
 	$(function () {
 		jQuery("#stepOneButton").click(function () {
-			if (typeof currentRegion === "undefined") {
-				//document.getElementById("error-map").style.display = "block";
-				document.getElementById("error-map").classList.add("error-visible");
-			} else {
-				document.getElementById("error-map").classList.remove("error-visible");
-				// hide error notice
-				resetRadioClasses(); // reset classes on radio element
-				window.radioProvidersList.classList.add(`NO${currentRegion + 1}`);
-				// add region picked class to radio element, to hide providers not active in picked region
+
+			if (checkRegionSelection()) {
+				// was selected
 				currentStep = 2;
 				showStep(currentStep);
+			} else {
+				// no region selected
 			}
 		});
 	});
@@ -568,17 +626,17 @@
 	) {
 		// change the FF values
 
-		/*
-	
 		if (typeof document.getElementsByClassName("fluentform") != "undefined") {
-	
-			document.getElementsByName("userRegion")[0].value = userRegion; //names for hidden fields
+
+			if (typeof document.getElementsByName("userRegion") != "undefined") {
+				document.getElementsByName("userRegion")[0].value = userRegion;
+			} //names for hidden fields
 			document.getElementsByName("gp")[0].value = passGridProvider;
 			document.getElementsByName("evs")[0].value = passEVs;
 			document.getElementsByName("sqm")[0].value = passSqm;
 			document.getElementsByName("ts")[0].value = Math.round(passSaves);
-	
-		} */
+
+		}
 
 		// we will push some datalayer, push it real good
 
