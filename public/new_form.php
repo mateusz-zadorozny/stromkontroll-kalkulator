@@ -56,6 +56,8 @@
             <a href="#stepForm"><button class="back-button">Tilbake</button></a>
             <a href="#stepForm"><button class="button-continue" id="newOneButton">Neste</button></a>
         </div>
+        <div class="error-notice" id="error-grid">Vennligst velg nettleverandør!
+        </div>
         <div class="progress" id="map-progress">
             <div class="bar">
                 <div class="indicator p20"></div>
@@ -63,14 +65,34 @@
             <div class="progress-text">20%</div>
         </div>
 
-
     </div>
 
     <div id="stepTwo" class="step">
 
+        <h5 class="step-number">04.</h5>
+        <h5 class="step-title">Årlig strømforbruk</h5>
 
-        <div class="error-notice" id="error-grid">Vennligst velg nettleverandør!
+        <div class="input-space">
+            <input class="inp" id="squareMeters" type="number" step="1" min="20" max="500" placeholder="Kvadratmeter">
+            <label for="squareMeters" class="inputs-sqm-kwh">m2</label>
         </div>
+
+        <div class="error-notice" id="error-sqm">Feil: Størrelsen er ikke innenfor grenseverdiene til kalkulatoren
+        </div>
+
+        <h5 class="step-number">05.</h5>
+        <h5 class="step-title">Antall elbilladere</h5>
+        <input type="radio" id="ev0" name="EVamt" value="0">
+        <label for="ev0">0</label><br>
+        <input type="radio" id="ev1" name="EVamt" value="1">
+        <label for="ev1">1</label><br>
+        <input type="radio" id="ev2" name="EVamt" value="2">
+        <label for="ev2">2</label><br>
+        <input type="radio" id="ev3" name="EVamt" value="3">
+        <label for="ev3">3</label><br>
+        <div class="error-notice" id="error-ev">Vennligst fyll inn antall elbilladere!
+        </div>
+
         <div class="button-space"><a href="#stepForm"><button class="back-button">Tilbake</button></a>
             <a href="#stepForm"><button class="button-continue" id="newTwoButton">Neste</button></a>
         </div>
@@ -84,67 +106,8 @@
     </div>
 
     <div id="stepThree" class="step">
-        <h5 class="step-number">04.</h5>
-        <h5 class="step-title">Årlig strømforbruk</h5>
-        <p class="step-description">For mest nøyaktig kalkulering skriv inn ditt årlige strømforbruk (kWh) eller bruk
-            størrelsen på boligen din dersom du er usikker på forbruket. Vi vil da estimere forbruket ditt og beregner
-            122 kWh per kvadratmeter basert på gjennomsnittstall fra SSB.</p>
-
-        <div class="input-space">
-            <input class="inp" id="squareMeters" type="number" step="1" min="20" max="500" placeholder="Kvadratmeter">
-            <label for="squareMeters" class="inputs-sqm-kwh">m2</label>
-        </div>
-        <div class="input-space" id="wattHoursSpace">
-            <input class="inp" id="wattHours" type="number" step="10" min="2440" max="61000"
-                placeholder="Årlig strømforbruk">
-            <label for="wattHours" class="inputs-sqm-kwh">kWh</label>
-        </div>
-
-        <div class="error-notice" id="error-sqm">Feil: Størrelsen er ikke innenfor grenseverdiene til kalkulatoren
-        </div>
-
-        <div class="button-space"><a href="#stepForm"><button class="back-button">Tilbake</button></a>
-            <a href="#stepForm"><button class="button-continue" id="stepThreeButton">Neste</button></a>
-        </div>
-
-        <div class="progress">
-            <div class="bar">
-                <div class="indicator p60"></div>
-            </div>
-            <div class="progress-text">60%</div>
-        </div>
-
-    </div>
-
-    <div id="stepFour" class="step">
-        <h5 class="step-number">05.</h5>
-        <h5 class="step-title">Antall elbilladere</h5>
-        <p class="step-description">Hvor mange elbilladere har du eller planlegger du å ha? Elbilladere er en viktig
-            komponent å styre smart for å oppnå god effektbalansering og dermed lavere nettleiekostnader.</p>
-        <input type="radio" id="ev0" name="EVamt" value="0">
-        <label for="ev0">0</label><br>
-        <input type="radio" id="ev1" name="EVamt" value="1">
-        <label for="ev1">1</label><br>
-        <input type="radio" id="ev2" name="EVamt" value="2">
-        <label for="ev2">2</label><br>
-        <input type="radio" id="ev3" name="EVamt" value="3">
-        <label for="ev3">3</label><br>
-        <div class="error-notice" id="error-ev">Vennligst fyll inn antall elbilladere!
-        </div>
-        <div class="button-space"><a href="#stepForm"><button class="back-button">Tilbake</button></a>
-            <button class="button-continue" id="stepFourButton">Neste</button>
-        </div>
-        <div class="progress">
-            <div class="bar">
-                <div class="indicator p80"></div>
-            </div>
-            <div class="progress-text">80%</div>
-        </div>
-    </div>
-
-    <div id="stepFive" class="step">
-        <a class="last-step">Regn ut besparelse én gang til</a><span style="margin:0px 8px;"> </span><a
-            class="modal-trigger" href="#disclaimer-open">Kalkulator detaljer</a>
+        <a class="last-step">Regn ut besparelse én gang til</a><span style="margin:0px 8px;"> </span>
+        <a class="modal-trigger" href="#disclaimer-open">Kalkulator detaljer</a>
     </div>
 
 </div>

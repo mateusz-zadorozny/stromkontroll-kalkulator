@@ -146,7 +146,8 @@ select.inp {
 
 /* script v2 */
 
-div.step {
+div.step,
+div.stepResults {
     transition: visibility 0s, opacity 0.5s linear;
 
 }
@@ -211,7 +212,8 @@ div.step {
 
 }
 
-div.step {
+div.step,
+div.stepResults {
     transition: opacity 1s ease-out;
     opacity: 0;
     height: 0;
@@ -219,7 +221,8 @@ div.step {
     position: relative;
 }
 
-div.active.step {
+div.active.step,
+div.active.stepResults {
     opacity: 1;
     height: auto;
 }

@@ -27,51 +27,54 @@
 		}
 	}
 
-	// step change read the ID of step divs
-
 	$(window).load(function () {
-
-		window.step0 = document.getElementById("stepZero");
-		window.step1 = document.getElementById("stepOne");
-		window.step2 = document.getElementById("stepTwo");
-		window.step3 = document.getElementById("stepThree");
-		window.step4 = document.getElementById("stepFour");
-		window.step5 = document.getElementById("stepFive");
-
+		// Find all steps by class and store them
+		window.steps = document.querySelectorAll('.step');
 	});
 
+	function showStep(stepIndex) {
+		// Remove 'active' class from all steps
+		window.steps.forEach(function (step, index) {
+			step.classList.remove('active');
+		});
+
+		// Add 'active' class to the current step
+		if (window.steps[stepIndex] != null) {
+			window.steps[stepIndex].classList.add('active');
+		} else {
+			console.error('Step ' + stepIndex + ' does not exist.');
+		}
+	}
 
 
-	function showStep(step) {
-		if (step === 0) {
-			if (document.getElementById("stepZero") != null) {
-				window.step0.classList.add("active");
-			}
-			window.step1.classList.remove("active");
-			window.step5.classList.remove("active");
+	function resetToFirstStep() {
+		showStep(0); // Show the first step
+	}
 
-		} else if (step === 1) {
-			window.step1.classList.add("active");
-			if (document.getElementById("stepZero") != null) {
-				window.step0.classList.remove("active");
-			}
-			window.step2.classList.remove("active");
-			window.step5.classList.remove("active");
-		} else if (step === 2) {
-			window.step1.classList.remove("active");
-			window.step2.classList.add("active");
-			window.step3.classList.remove("active");
-		} else if (step === 3) {
-			window.step2.classList.remove("active");
-			window.step3.classList.add("active");
-			window.step4.classList.remove("active");
-		} else if (step === 4) {
-			window.step3.classList.remove("active");
-			window.step4.classList.add("active");
-			window.step5.classList.remove("active");
-		} else if (step === 5) {
-			window.step4.classList.remove("active");
-			window.step5.classList.add("active");
+	function nextStep() {
+		// Find the currently active step
+		var currentStepIndex = Array.from(window.steps).findIndex(function (step) {
+			return step.classList.contains('active');
+		});
+		console.log('Current step index:', currentStepIndex); // Log the current index
+
+		// If there is a next step, show it
+		if (currentStepIndex >= 0 && currentStepIndex < window.steps.length - 1) {
+			showStep(currentStepIndex + 1);
+		} else {
+			console.log('No next step found or already at the last step');
+		}
+	}
+
+	function previousStep() {
+		// Find the currently active step
+		var currentStepIndex = Array.from(window.steps).findIndex(function (step) {
+			return step.classList.contains('active');
+		});
+
+		// If there is a previous step, show it
+		if (currentStepIndex > 0) {
+			showStep(currentStepIndex - 1);
 		}
 	}
 
@@ -79,8 +82,9 @@
 
 	$(function () {
 		jQuery(".back-button").click(function () {
-			--currentStep;
-			showStep(currentStep);
+			/*--currentStep;
+			showStep(currentStep);*/
+			previousStep();
 		});
 	});
 
@@ -151,6 +155,37 @@
 			return false;
 		}
 	}
+	// choice of EVSE as last step
+	function checkEVSE() {
+		console.log("Checking EVSE pick ...");
+		evQuant = getRadioValue("EVamt"); // read from EVSE radio
+
+		if (typeof evQuant === "undefined") {
+			document.getElementById("error-ev").classList.add("error-visible");
+			return false;
+		} else {
+			document.getElementById("error-ev").classList.remove("error-visible");
+			return true;
+		}
+	}
+	// make calculation
+	function calculateEverything() {
+
+		const stepSavings = houseTypeSavings[currentGridCompany][houseType]; // dividing change from 18.11.2022 moved to step calculation part
+		console.log("%cStep savings from lower step tariffs: " + stepSavings, "background-color: lightgreen;");
+
+		calculateSave(
+			calculateYearlyConsupmtion(window.squareMeters), //calculate yearly consumption from sqm estimation
+			evQuant,
+			stepSavings, //pick value from steps data of providers
+			currentGridCompany
+		);
+	}
+	// FigPii custom funtion
+	function FigPiiConversion(event) {
+		window._fpEvent = window._fpEvent || [];
+		window._fpEvent.push(["eventConversion", { value: event }]); // FigPii conversion
+	}
 
 	// NEWFORM: Step 0: GOV+REGION
 	$(function () {
@@ -159,11 +194,9 @@
 			if (checkGovSupport() && checkRegionSelection()) {
 				// was true
 				console.log("Data picked. Showing next step.");
-				currentStep = 1;
-				showStep(currentStep);
+				nextStep();
 				// send calculationsStart to FigPii
-				window._fpEvent = window._fpEvent || [];
-				window._fpEvent.push(["eventConversion", { value: "calculationsStart" }]);
+				FigPiiConversion("calculationsStart");
 			} else {
 				console.warn("Can't proceed to next step.");
 			}
@@ -176,9 +209,7 @@
 			console.log("Going to next step ...");
 			if (checkProviderSelection()) {
 				console.log("Data picked. Showing next step.");
-				currentStep = 2;
-				showStep(currentStep);
-				// provider was selected
+				nextStep();
 			} else {
 				console.warn("Can't proceed to next step.");
 			}
@@ -190,9 +221,12 @@
 			console.log("Going to next step ...");
 			if (checkHouseSQM() && checkEVSE()) {
 				console.log("Data picked. Showing next step.");
-				currentStep = 3;
-				showStep(currentStep);
-				// provider was selected
+				// calculate the results
+				calculateEverything();
+				// show next step
+				nextStep();
+				// send FigPii event
+				FigPiiConversion("calculateSave");
 			} else {
 				console.warn("Can't proceed to next step.");
 			}
@@ -223,8 +257,7 @@
 
 	$(function () {
 		jQuery(".last-step").click(function () {
-			currentStep = 0;
-			showStep(currentStep);
+			resetToFirstStep();
 			resultsElementsVisible(false);
 		});
 	});
@@ -252,7 +285,6 @@
 	}
 
 	// step one - validate regions and get IDs from the map + link with radio list
-
 	$(window).load(function () {
 
 		window.area01 = document.getElementById("NO1");
@@ -265,7 +297,6 @@
 	});
 
 	// remove active from region, when picking another
-
 	function resetAreas() {
 		window.area01.classList.remove("active");
 		window.area02.classList.remove("active");
@@ -275,7 +306,6 @@
 	}
 
 	// remove region classes before adding picked class
-
 	function resetRadioClasses() {
 		window.radioProvidersList.classList.remove("NO1");
 		window.radioProvidersList.classList.remove("NO2");
@@ -285,7 +315,6 @@
 	}
 
 	// show picked region on the map + save the selection for calculations
-
 	function regionPicker(regionID) {
 		resetAreas();
 		switch (regionID) {
@@ -318,68 +347,52 @@
 	}
 
 	// activate regionPicker on map clicks
-
 	$(function () {
 		jQuery(".region-link").click(function (event) {
-
 			regionPicker(event.target.id);
-
 		});
 	})
 
 	// validate first step
-
 	$(function () {
 		jQuery("#stepOneButton").click(function () {
 			console.log("Going to next step ...");
 			if (checkRegionSelection()) {
 				// was selected
-				currentStep = 2;
-				showStep(currentStep);
+				nextStep();
 			} else {
+				console.warn("No region selected.");
 				// no region selected
 			}
 		});
 	});
 
 	// scroll after picking the provider to make sure buttons are visible
-
 	$(function () {
 
 		$('#gridCompanySelect').change(function () {
-
 			if ($(window).width() < 768) {
-
 				document.getElementById("providers-progress").scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
 				// scroll to visible progress bar function
-
 			}
-
 		});
-
 	});
 
 	// validate second step
-
 	$(function () {
 		jQuery("#stepTwoButton").click(function () {
 			console.log("Going to next step ...");
 			currentGridCompany = getRadioValue("gridCompanySelect");
-
 			if (checkProviderSelection()) {
 				console.log("Showing next step ...");
-
-				currentStep = 3;
-				showStep(currentStep);
+				nextStep();
 			} else {
 				console.warn("Can't proceed to next step.")
 			}
 		});
-
 	});
 
 	// validate third step // squareMeters
-
 	//var squareMeters;
 
 	$(function () {
@@ -388,9 +401,7 @@
 			window.squareMeters = document.getElementById("squareMeters").value;
 			if (checkHouseSQM()) {
 				console.log("Showing next step...")
-				currentStep = 4;
-				showStep(currentStep);
-
+				nextStep();
 			} else {
 				console.warn("Error validating step 3.")
 			}
@@ -400,46 +411,29 @@
 	// sync sqm & consumption fields
 
 	$(function () {
-
 		$("#squareMeters").on("input", function () {
 			$("#wattHours").val($("#squareMeters").val() * 122);
 		});
-
 		$("#wattHours").on("input", function () {
 			$("#squareMeters").val(Math.round($("#wattHours").val() / 122));
 		});
-
 	});
 
 	// validate last step & calculate the save
-
 	$(function () {
 
 		jQuery("#stepFourButton").click(function () {
-			evQuant = getRadioValue("EVamt"); //
+			evQuant = getRadioValue("EVamt");
 
-			if (typeof evQuant === "undefined") {
-
-				document.getElementById("error-ev").classList.add("error-visible");
-
+			if (checkEVSE()) {
+				// calculate the results
+				calculateEverything();
+				// show next step
+				nextStep();
+				// send FigPii event
+				FigPiiConversion("calculateSave");
 			} else {
-
-				document.getElementById("error-ev").classList.remove("error-visible");
-
-				const stepSavings = houseTypeSavings[currentGridCompany][houseType]; // dividing change from 18.11.2022 moved to step calculation part
-				console.log("%cStep savings from lower step tariffs: " + stepSavings, "background-color: lightgreen;");
-
-				calculateSave(
-					calculateYearlyConsupmtion(window.squareMeters), //calculate yearly consumption from sqm estimation
-					evQuant,
-					stepSavings, //pick value from steps data of providers
-					currentGridCompany
-				);
-
-				currentStep = 5;
-				showStep(currentStep);
-				window._fpEvent = window._fpEvent || [];
-				window._fpEvent.push(["eventConversion", { value: "calculateSave" }]);
+				console.warn("No ESVE field picked.");
 			}
 		});
 	});
@@ -660,7 +654,7 @@
 	) {
 		// change the FF values
 
-		if (typeof document.getElementsByClassName("fluentform") != "undefined") {
+		/*if (typeof document.getElementsByClassName("fluentform") != "undefined") {
 
 			if (typeof document.getElementsByName("userRegion") != "undefined") {
 				document.getElementsByName("userRegion")[0].value = userRegion;
@@ -670,7 +664,7 @@
 			document.getElementsByName("sqm")[0].value = passSqm;
 			document.getElementsByName("ts")[0].value = Math.round(passSaves);
 
-		}
+		}*/
 
 		// we will push some datalayer, push it real good
 
