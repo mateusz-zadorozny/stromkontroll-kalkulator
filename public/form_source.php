@@ -100,19 +100,14 @@
 
     <div id="stepThree" class="step">
         <h5 class="step-number">04.</h5>
-        <h5 class="step-title">Årlig strømforbruk</h5>
-        <p class="step-description">For mest nøyaktig kalkulering skriv inn ditt årlige strømforbruk (kWh) eller bruk
-            størrelsen på boligen din dersom du er usikker på forbruket. Vi vil da estimere forbruket ditt og beregner
-            122 kWh per kvadratmeter basert på gjennomsnittstall fra SSB.</p>
+        <h5 class="step-title">Boligstørrelse</h5>
+        <p class="step-description">For nøyaktig beregning, skriv inn størrelsen på hjemmet ditt. Vi vil da anslå
+            forbruket ditt og beregne 122 kWh per kvadratmeter basert på gjennomsnittstall fra Statistisk Sentralbyrå.
+        </p>
 
         <div class="input-space">
             <input class="inp" id="squareMeters" type="number" step="1" min="20" max="500" placeholder="Kvadratmeter">
             <label for="squareMeters" class="inputs-sqm-kwh">m2</label>
-        </div>
-        <div class="input-space" id="wattHoursSpace">
-            <input class="inp" id="wattHours" type="number" step="10" min="2440" max="61000"
-                placeholder="Årlig strømforbruk">
-            <label for="wattHours" class="inputs-sqm-kwh">kWh</label>
         </div>
 
         <div class="error-notice" id="error-sqm">Feil: Størrelsen er ikke innenfor grenseverdiene til kalkulatoren
