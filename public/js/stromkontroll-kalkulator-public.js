@@ -28,8 +28,8 @@
 	}
 
 	$(window).load(function () {
-		// Find all steps by class and store them
-		window.steps = document.querySelectorAll('.step');
+		// Find all .step elements inside #stepForm and store them
+		window.steps = document.querySelectorAll('#stepForm .step');
 	});
 
 	function showStep(stepIndex) {
