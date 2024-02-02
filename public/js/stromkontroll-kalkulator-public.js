@@ -683,13 +683,6 @@
 			sqm: sqmRounder,
 			save: saveRounder
 		});
-
-		if (typeof fbq === "undefined") {
-			console.log("Facebook Pixel not initialised");
-		} else {
-			fbq("trackCustom", "CalculationCompleted");
-			console.log("Calculations complete");
-		} // custom Facebook event
 	}
 
 	// CALCULATE GOV SUPPORT

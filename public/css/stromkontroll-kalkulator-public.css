@@ -38,12 +38,6 @@
     #monthConsumption {
         max-width: 312px !important;
     }
-
-
-}
-
-@media screen and (min-width: 520) {
-    display: flex;
 }
 
 /* END OF MOBILE */
