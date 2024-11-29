@@ -47,7 +47,7 @@
 .inp,
 input.inp {
     width: 291px;
-    border-radius: 3px;
+    border-radius: 0px;
     border-color: white;
     font-size: 24px;
     margin-top: -5px;
@@ -160,7 +160,14 @@ div.stepResults {
     font-weight: 700;
     letter-spacing: 0.78px;
     text-transform: uppercase;
-    border-radius: 3px;
+    border-radius: 0px;
+}
+
+.back-button:hover {
+    background-color: var(--primary-pink);
+    color: var(--primary-text);
+    transition: all 0.3s ease-in;
+    border-radius: 100px;
 }
 
 .button-space {
@@ -190,25 +197,39 @@ div.stepResults {
     display: inline-block;
     width: 17px;
     height: 19px;
-    background: var(--primary-text);
+    background-color: var(--primary-text);
     mask: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19"><path d="M16.5 9.5L0.75 18.5933L0.75 0.406733L16.5 9.5Z"/></svg>') no-repeat center;
     -webkit-mask: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19"><path d="M16.5 9.5L0.75 18.5933L0.75 0.406733L16.5 9.5Z"/></svg>') no-repeat center;
     margin-left: 8px;
 }
 
 
-.back-button:before {
-    content: url(../img/back.png);
+.back-button::before {
+    content: "";
+    display: inline-block;
+    width: 17px;
+    height: 19px;
+    background-color: #D9D9D9;
+    /* Ensure it matches the text color */
+    mask: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19"><path d="M16.5 9.5L0.75 18.5933L0.75 0.406733L16.5 9.5Z"/></svg>') no-repeat center;
+    -webkit-mask: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19"><path d="M16.5 9.5L0.75 18.5933L0.75 0.406733L16.5 9.5Z"/></svg>') no-repeat center;
+    margin-right: 8px;
+    transform: rotate(180deg);
+    /* Rotate the icon 180 degrees */
     position: relative;
-    top: 2px;
-    right: 8px
+}
+
+.back-button::before:hover {
+    background: var(--primary-text);
+    transition: all 0.3s ease-in;
+
 }
 
 .back-button {
     background-color: #FFF;
     margin-right: 26px;
     color: #D9D9D9;
-    border: 1px solid #6BC5A8;
+    border: 1px solid var(--primary-pink);
 
 }
 
@@ -321,7 +342,7 @@ input[type="radio"]:checked {
     margin-bottom: 40px;
     max-width: 341px;
     background-color: white;
-    border: 1px solid #6BC5A8;
+    border: 1px solid var(--primary-pink);
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15);
     border-radius: 5px;
     padding: 17px 18px;
@@ -391,7 +412,7 @@ a.last-step {
 
 path.area {
     fill: white;
-    stroke: #3c000f;
+    stroke: var(--primary-text);
     stroke-width: 2;
 }
 
@@ -404,7 +425,7 @@ path.area:hover {
 path.active {
     fill: #d268cd !important;
     stroke-width: 2;
-    stroke: white;
+    stroke: var(--map-pink-3);
     transition: fill 0.3s ease;
 }
 
@@ -470,8 +491,8 @@ button#orangeButton {
     margin-left: auto;
     margin-right: auto;
     margin-top: -10px;
-    background: #F94409;
-    border-radius: 3px;
+    background: var(--primary-pink);
+    border-radius: 0px;
     padding: 16px 40px;
     font-size: 32px;
     line-height: 44px;
@@ -484,17 +505,11 @@ button#orangeButton {
     z-index: 10;
 }
 
-.inp:focus {
-    border-color: red;
-    /* Active border color */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    /* Optional: Glow effect */
-}
-
 button#orangeButton:hover {
     position: relative;
     top: 2px;
-    filter: brightness(1.4);
+    background: var(--secondary-pink-1);
+    transition: all 0.3s ease-in;
 }
 
 /* NOWE */
@@ -577,4 +592,7 @@ button#orangeButton:hover {
 
 :root {
     --primary-text: #3c000f;
+    --primary-pink: #ffbbfc;
+    --secondary-pink-1: #fccafc;
+    --map-pink-3: #f596f1;
 }
