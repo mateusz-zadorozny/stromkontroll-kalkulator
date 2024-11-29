@@ -16,7 +16,7 @@
  * Plugin Name:       StromKontroll kalkulator
  * Plugin URI:        https://stromkontroll.no
  * Description:       Allows you to include the simple kalkulator in your page, to calculate potential energy save.
- * Version:           1.2.3
+ * Version:           1.3.0
  * Author:            Mateusz Zadorożny
  * Author URI:        https://mpress.cc
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if (!defined('WPINC')) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('STROMKONTROLL_KALKULATOR_VERSION', '1.2.3');
+define('STROMKONTROLL_KALKULATOR_VERSION', '1.3.0');
 
 /**
  * The code that runs during plugin activation.
@@ -84,15 +84,29 @@ function run_stromkontroll_kalkulator()
 }
 run_stromkontroll_kalkulator();
 
-function cwpai_shortcode_function()
+function cwpai_shortcode_function($atts)
 {
+	$atts = shortcode_atts(
+		array(
+			'style' => 'default',
+		),
+		$atts,
+		'kalkulator_shortcode'
+	);
+
+	$style = sanitize_text_field($atts['style']);
+	$css_file = plugin_dir_path(__FILE__) . 'public/css/stromkontroll-kalkulator-public_' . $style . '.css';
+
+	if (!file_exists($css_file)) {
+		$css_file = plugin_dir_path(__FILE__) . 'public/css/stromkontroll-kalkulator-public.css';
+	}
+
+	wp_enqueue_style('stromkontroll-kalkulator-public', plugin_dir_url(__FILE__) . 'public/css/' . basename($css_file), array(), STROMKONTROLL_KALKULATOR_VERSION, 'all');
 
 	ob_start();
 	include_once(plugin_dir_path(__FILE__) . 'public/form_source.php');
 	return ob_get_clean();
-
 }
-
 add_shortcode('kalkulator_shortcode', 'cwpai_shortcode_function');
 
 function new_shortcode_function()

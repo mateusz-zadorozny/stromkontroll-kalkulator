@@ -20,7 +20,8 @@
  * @subpackage Stromkontroll_Kalkulator/public
  * @author     Mateusz Zadorożny <mateusz@mpress.cc>
  */
-class Stromkontroll_Kalkulator_Public {
+class Stromkontroll_Kalkulator_Public
+{
 
 	/**
 	 * The ID of this plugin.
@@ -47,7 +48,8 @@ class Stromkontroll_Kalkulator_Public {
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct($plugin_name, $version)
+	{
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
@@ -59,7 +61,8 @@ class Stromkontroll_Kalkulator_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -73,7 +76,8 @@ class Stromkontroll_Kalkulator_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/stromkontroll-kalkulator-public.css', array(), $this->version, 'all' );
+		// we don't need to enqueue any styles for this plugin here - we use param
+		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/stromkontroll-kalkulator-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -82,7 +86,8 @@ class Stromkontroll_Kalkulator_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -96,7 +101,7 @@ class Stromkontroll_Kalkulator_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/stromkontroll-kalkulator-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/stromkontroll-kalkulator-public.js', array('jquery'), $this->version, false);
 
 	}
 

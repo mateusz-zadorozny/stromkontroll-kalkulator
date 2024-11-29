@@ -3,10 +3,6 @@
  * included in this file.
  */
 
-:root {
-    --primary-text: #022A46;
-}
-
 /* MOBILE */
 /* ------------------*/
 
@@ -34,7 +30,7 @@
     }
 
     .back-button {
-        background-color: #04AB83;
+        background-color: var(--primary-text);
         margin-right: auto;
     }
 
@@ -55,7 +51,7 @@ input.inp {
     border-color: white;
     font-size: 24px;
     margin-top: -5px;
-    border: 1px solid #6BC5A8;
+    border: 1px solid var(--primary-text);
     height: 86px;
 }
 
@@ -65,7 +61,7 @@ div#wattHoursSpace {
 
 label.inputs-sqm-kwh {
     margin-left: 10px !important;
-    color: #17253c;
+    color: var(--primary-text);
     min-width: 38px;
 }
 
@@ -109,7 +105,7 @@ select.inp {
 #totalSaveResult {
     font-size: 60px;
     font-weight: 800;
-    color: #17253c;
+    color: var(--primary-text);
     margin-top: -16px;
 }
 
@@ -174,14 +170,15 @@ div.stepResults {
 }
 
 .button-continue {
-    background: #022A46;
-    color: white;
+    background: #ffbbfc;
+    color: var(--primary-text);
 }
 
 .button-continue:hover {
     opacity: 0.95;
-    background: #02365b;
-    transition: opacity 0.3s ease-in;
+    background: #fccafc;
+    border-radius: 100px;
+    transition: all 0.3s ease-in;
 }
 
 .button-space a {
@@ -193,11 +190,12 @@ div.stepResults {
     display: inline-block;
     width: 17px;
     height: 19px;
-    background: #fff;
+    background: var(--primary-text);
     mask: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19"><path d="M16.5 9.5L0.75 18.5933L0.75 0.406733L16.5 9.5Z"/></svg>') no-repeat center;
     -webkit-mask: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 19"><path d="M16.5 9.5L0.75 18.5933L0.75 0.406733L16.5 9.5Z"/></svg>') no-repeat center;
     margin-left: 8px;
 }
+
 
 .back-button:before {
     content: url(../img/back.png);
@@ -254,13 +252,13 @@ p.step-description {
     font-weight: 700;
     margin-top: 2px;
     margin-bottom: 2px;
-    color: #022A46;
+    color: #3c000f;
 }
 
 p.step-description,
 #gridCompanySelect>label,
 #stepFour>label {
-    color: #022A46;
+    color: #3c000f;
 }
 
 radio#gridCompanySelect {
@@ -302,17 +300,17 @@ input[type="radio"] {
     font: inherit;
     width: 1.25em;
     height: 1.25em;
-    border: 0.1em solid #6BC5A8;
+    border: 0.1em solid var(--primary-text);
     border-radius: 50%;
 }
 
 input[type="radio"]:checked {
-    background-color: #022A46;
+    background-color: #3c000f;
     width: 1em;
     height: 1em;
     margin: 12px 7px -2px 2px;
     border: 0.15em solid #FFF;
-    outline: 0.15em solid #6BC5A8;
+    outline: 0.15em solid var(--primary-text);
 }
 
 /* progress */
@@ -341,7 +339,7 @@ input[type="radio"]:checked {
 }
 
 .indicator {
-    background: #022A46;
+    background: #3c000f;
     border-radius: 1000px;
     height: 8px;
     width: 0%;
@@ -393,18 +391,18 @@ a.last-step {
 
 path.area {
     fill: white;
-    stroke: #016FFF;
+    stroke: #3c000f;
     stroke-width: 2;
 }
 
 path.area:hover {
-    fill: #D9D9D9;
+    fill: #f9dcf9;
     stroke-width: 3;
     transition: fill 0.3s ease;
 }
 
 path.active {
-    fill: #022A46 !important;
+    fill: #d268cd !important;
     stroke-width: 2;
     stroke: white;
     transition: fill 0.3s ease;
@@ -549,7 +547,7 @@ button#orangeButton:hover {
     font: inherit;
     width: 0em;
     height: 0em;
-    border: 0 solid #6BC5A8;
+    border: 0 solid #d268cd;
     border-radius: 0;
 }
 
@@ -559,9 +557,17 @@ button#orangeButton:hover {
     height: 0;
     margin: 0;
     border: 0 solid #FFF;
-    outline: 0 solid #6BC5A8;
+    outline: 0 solid #d268cd;
+}
+
+#stepForm label {
+    color: var(--primary-text);
 }
 
 .radio-h {
     margin: 12px 0px;
+}
+
+:root {
+    --primary-text: #3c000f;
 }
