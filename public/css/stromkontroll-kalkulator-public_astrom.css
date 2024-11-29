@@ -185,6 +185,7 @@ div.stepResults {
     opacity: 0.95;
     background: #fccafc;
     border-radius: 100px;
+    color: var(--primary-text);
     transition: all 0.3s ease-in;
 }
 
@@ -217,12 +218,13 @@ div.stepResults {
     transform: rotate(180deg);
     /* Rotate the icon 180 degrees */
     position: relative;
+    transition: all 0.3s ease-in;
+    /* Smooth transition for hover */
 }
 
-.back-button::before:hover {
+.back-button:hover::before {
     background: var(--primary-text);
-    transition: all 0.3s ease-in;
-
+    /* Change color on hover */
 }
 
 .back-button {
