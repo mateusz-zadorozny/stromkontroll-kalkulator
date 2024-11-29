@@ -510,8 +510,10 @@ button#orangeButton {
 button#orangeButton:hover {
     position: relative;
     top: 2px;
-    background: var(--secondary-pink-1);
+    background: var(--secondary-pink-1) !important;
+    color: var(--primary-text);
     transition: all 0.3s ease-in;
+    border-radius: 100px;
 }
 
 /* NOWE */
