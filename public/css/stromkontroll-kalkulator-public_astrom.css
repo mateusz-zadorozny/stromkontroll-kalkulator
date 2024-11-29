@@ -268,7 +268,7 @@ radio#gridCompanySelect {
 }
 
 .error-notice {
-    color: #17253c;
+    color: #db0000;
     font-weight: 700;
     margin-top: 8px;
     margin-bottom: 0px;
@@ -482,6 +482,13 @@ button#orangeButton {
 #orange {
     overflow: visible;
     z-index: 10;
+}
+
+.inp:focus {
+    border-color: red;
+    /* Active border color */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    /* Optional: Glow effect */
 }
 
 button#orangeButton:hover {
